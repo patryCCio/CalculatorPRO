@@ -1,0 +1,3 @@
+3,2(33/2)() = 3.2*(33/2)*0 -> correct
+3/0 = ArithmeticException -> correct
+3+b+2 = NumberFormatException -> correct
