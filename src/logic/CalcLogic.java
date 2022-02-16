@@ -13,6 +13,16 @@ public class CalcLogic {
     private String helper;
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+    private static int brackets = 0;
+
+    public static int getBrackets() {
+        return brackets;
+    }
+
+    public static void setBrackets(int brackets) {
+        CalcLogic.brackets = brackets;
+    }
+
     public ArrayList<Character> getCharacters() {
         return characters;
     }
