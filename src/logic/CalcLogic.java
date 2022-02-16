@@ -1,8 +1,5 @@
 package logic;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 
 public class CalcLogic {
@@ -10,8 +7,35 @@ public class CalcLogic {
     private ArrayList<Double> actions = new ArrayList<>();
     private ArrayList<Character> characters = new ArrayList<>();
 
+    private Boolean isDivide;
+    private Boolean isMultiply;
+    private Boolean isBracket;
+
     private String helper;
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    public Boolean getDivide() {
+        return isDivide;
+    }
+
+    public void setDivide(Boolean divide) {
+        isDivide = divide;
+    }
+
+    public Boolean getMultiply() {
+        return isMultiply;
+    }
+
+    public void setMultiply(Boolean multiply) {
+        isMultiply = multiply;
+    }
+
+    public Boolean getBracket() {
+        return isBracket;
+    }
+
+    public void setBracket(Boolean bracket) {
+        isBracket = bracket;
+    }
 
     public ArrayList<Character> getCharacters() {
         return characters;
@@ -27,14 +51,6 @@ public class CalcLogic {
 
     public void setHelper(String helper) {
         this.helper = helper;
-    }
-
-    public BufferedReader getBr() {
-        return br;
-    }
-
-    public void setBr(BufferedReader br) {
-        this.br = br;
     }
 
     public ArrayList<Double> getActions() {
