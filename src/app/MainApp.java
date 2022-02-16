@@ -104,6 +104,11 @@ public class MainApp {
                 calcLogic.stringBuilder.replace(x,x+1,"*(");
             }
         }
+        for(int x=0; x<calcLogic.stringBuilder.length()-1; x++){
+            if(calcLogic.stringBuilder.charAt(x)==')'&&calcLogic.stringBuilder.charAt(x+1)!='/'&&calcLogic.stringBuilder.charAt(x+1)!='*'&&calcLogic.stringBuilder.charAt(x+1)!='-'&&calcLogic.stringBuilder.charAt(x+1)!='+'){
+                calcLogic.stringBuilder.replace(x,x+1,")*");
+            }
+        }
         fillEmptyBrackets(calcLogic);
     }
 
