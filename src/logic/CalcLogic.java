@@ -39,6 +39,16 @@ public class CalcLogic {
         isBracket = bracket;
     }
 
+    private static int brackets = 0;
+
+    public static int getBrackets() {
+        return brackets;
+    }
+
+    public static void setBrackets(int brackets) {
+        CalcLogic.brackets = brackets;
+    }
+
     public ArrayList<Character> getCharacters() {
         return characters;
     }
