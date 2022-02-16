@@ -5,7 +5,6 @@ import logic.CalcLogic;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class MainApp {
     public static void main(String[] args) {
@@ -13,10 +12,14 @@ public class MainApp {
             choiceOption();
         } catch (IOException e) {
             System.err.println("Źle zapisane działanie lub coś poszło nie tak!");
+        } catch (ArithmeticException e){
+            System.err.println("Nie dzieli się przez 0!");
+        } catch (NumberFormatException e){
+            System.err.println("Można używać tylko cyfr i odpowiednich znaków!");
         }
     }
 
-    private static void choiceOption() throws IOException {
+    private static void choiceOption() throws IOException{
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int option = -1;
         while(option != 2){
@@ -51,31 +54,68 @@ public class MainApp {
         calcLogic.stringBuilder.append(calcLogic.helper);
         for(int x=0; x<calcLogic.stringBuilder.length(); x++){
             if((calcLogic.stringBuilder.charAt(x)=='(')||(calcLogic.stringBuilder.charAt(x)==')')||(calcLogic.stringBuilder.charAt(x)=='[')||(calcLogic.stringBuilder.charAt(x)==']')){
-                CalcLogic.setBrackets(CalcLogic.getBrackets()+1);
+                CalcLogic.setBrackets(CalcLogic.getBrackets()+1);//zlicza sume wszystkich nawiasow!
             }
             if((calcLogic.stringBuilder.charAt(x)=='[')){
                 calcLogic.stringBuilder.replace(x, x+1, "(");
             }
             if(calcLogic.stringBuilder.charAt(x)==']'){
-                calcLogic.stringBuilder.replace(x, x+1, ")");
+                calcLogic.stringBuilder.replace(x, x+1, ")");//zabezpieczenie przed nawiasami kwadratowymi
+            }
+            if(calcLogic.stringBuilder.charAt(x)==','){
+                calcLogic.stringBuilder.replace(x, x+1, ".");//zabezpieczenie przed przecinkiem
             }
         }
+        if(CalcLogic.getBrackets()%2!=0)throw new IOException();
+        checkCorrectAction(calcLogic);
 
-        for(int x=0; x<calcLogic.stringBuilder.length(); x++){
-            if(calcLogic.stringBuilder.charAt(x)==')'&&calcLogic.stringBuilder.charAt(x+1)==')'){
-                calcLogic.stringBuilder.replace(x+1,x+1,"*");
+
+
+        System.out.println("Dz: " + calcLogic.stringBuilder);
+    }
+
+    private static void checkCorrectAction(CalcLogic calcLogic) throws IOException {
+        if(calcLogic.stringBuilder.charAt(0)!='0'&&calcLogic.stringBuilder.charAt(0)!='1'&&calcLogic.stringBuilder.charAt(0)!='2'&&calcLogic.stringBuilder.charAt(0)!='3'&&calcLogic.stringBuilder.charAt(0)!='4'&&
+                calcLogic.stringBuilder.charAt(0)!='5'&&calcLogic.stringBuilder.charAt(0)!='6'&&calcLogic.stringBuilder.charAt(0)!='7'&&calcLogic.stringBuilder.charAt(0)!='8'&&calcLogic.stringBuilder.charAt(0)!='9')throw new IOException();
+
+        if(calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='0'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='1'&&
+                calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='2'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='3'&&
+                calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='4'&& calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='5'&&
+                calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='6'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='7'&&
+                calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='8'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='9')throw new IOException();
+
+        addMultiply(calcLogic);
+    }
+
+    //dodawanie znakow mnozenia np. 3(2+8)(4-3) = 3*(2+8)*(4-3)
+    private static void addMultiply(CalcLogic calcLogic){
+        for(int x=1; x<calcLogic.stringBuilder.length(); x++){
+            if(calcLogic.stringBuilder.charAt(x)=='('&&calcLogic.stringBuilder.charAt(x-1)!='/'&&calcLogic.stringBuilder.charAt(x-1)!='*'&&calcLogic.stringBuilder.charAt(x-1)!='-'&&calcLogic.stringBuilder.charAt(x-1)!='+'){
+                calcLogic.stringBuilder.replace(x,x+1,"*(");
             }
-            System.out.println(calcLogic.stringBuilder);
         }
+        fillEmptyBrackets(calcLogic);
+    }
 
+    private static void fillEmptyBrackets(CalcLogic calcLogic) {
         for(int x=0; x<calcLogic.stringBuilder.length(); x++){
             if((calcLogic.stringBuilder.charAt(x)=='('&&calcLogic.stringBuilder.charAt(x+1)==')')||(calcLogic.stringBuilder.charAt(x)=='['&&calcLogic.stringBuilder.charAt(x+1)==']')){
                 CalcLogic.setBrackets(CalcLogic.getBrackets()-2);
                 calcLogic.stringBuilder.replace(x, x+2, "0");
             }
         }
-        if(CalcLogic.getBrackets()%2!=0)throw new IOException();
-        System.out.println(CalcLogic.getBrackets());
-        System.out.println("Dz: " + calcLogic.stringBuilder);
+        divideByZero(calcLogic);
+    }
+
+    private static void divideByZero(CalcLogic calcLogic) {
+        if(calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)=='0'){
+            for(int x=0; x<calcLogic.stringBuilder.length(); x++){
+                if(calcLogic.stringBuilder.charAt(x)=='/'&&calcLogic.stringBuilder.charAt(x+1)=='0')throw new ArithmeticException();
+            }
+        } else{
+            for(int x=0; x<calcLogic.stringBuilder.length(); x++){
+                if(calcLogic.stringBuilder.charAt(x)=='/'&&calcLogic.stringBuilder.charAt(x+1)=='0'&&calcLogic.stringBuilder.charAt(x+2)!='.')throw new ArithmeticException();
+            }
+        }
     }
 }
