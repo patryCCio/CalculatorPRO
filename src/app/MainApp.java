@@ -1,5 +1,6 @@
 package app;
 
+import controller.CalcController;
 import logic.CalcLogic;
 
 import java.io.BufferedReader;
@@ -19,6 +20,7 @@ public class MainApp {
         }
     }
 
+    //Wybór opcji menu
     private static void choiceOption() throws IOException{
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int option = -1;
@@ -43,6 +45,7 @@ public class MainApp {
         bufferedReader.close();
     }
 
+    //Wpisywanie działania
     private static void typeAction(BufferedReader bufferedReader) throws IOException{
         System.out.print("Działanie: ");
         CalcLogic calcLogic = new CalcLogic();
@@ -50,6 +53,7 @@ public class MainApp {
         checkBrackets(calcLogic);
     }
 
+    //Sprawdzanie nawiasów
     private static void checkBrackets(CalcLogic calcLogic) throws IOException{
         calcLogic.stringBuilder.append(calcLogic.helper);
         for(int x=0; x<calcLogic.stringBuilder.length(); x++){
@@ -68,12 +72,9 @@ public class MainApp {
         }
         if(CalcLogic.getBrackets()%2!=0)throw new IOException();
         checkCorrectAction(calcLogic);
-
-//23+0/7+8*2+32,3+2.2()(3)
-
-        System.out.println("Dz: " + calcLogic.stringBuilder);
     }
 
+    //Sprawdzanie działania pod względem logiki
     private static void checkCorrectAction(CalcLogic calcLogic) throws IOException {
         if(calcLogic.stringBuilder.charAt(0)!='0'&&calcLogic.stringBuilder.charAt(0)!='1'&&calcLogic.stringBuilder.charAt(0)!='2'&&calcLogic.stringBuilder.charAt(0)!='3'&&
                 calcLogic.stringBuilder.charAt(0)!='4'&& calcLogic.stringBuilder.charAt(0)!='5'&&calcLogic.stringBuilder.charAt(0)!='6'&&calcLogic.stringBuilder.charAt(0)!='7'&&
@@ -106,6 +107,7 @@ public class MainApp {
         fillEmptyBrackets(calcLogic);
     }
 
+    //Uzupełnianie pustych nawiasów np. ()() = 0*0
     private static void fillEmptyBrackets(CalcLogic calcLogic) {
         for(int x=0; x<calcLogic.stringBuilder.length(); x++){
             if((calcLogic.stringBuilder.charAt(x)=='('&&calcLogic.stringBuilder.charAt(x+1)==')')||(calcLogic.stringBuilder.charAt(x)=='['&&calcLogic.stringBuilder.charAt(x+1)==']')){
@@ -116,6 +118,7 @@ public class MainApp {
         divideByZero(calcLogic);
     }
 
+    //Sprawdzanie problemu dzielenia przez 0!
     private static void divideByZero(CalcLogic calcLogic) {
         if(calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)=='0'){
             for(int x=0; x<calcLogic.stringBuilder.length(); x++){
@@ -126,5 +129,7 @@ public class MainApp {
                 if(calcLogic.stringBuilder.charAt(x)=='/'&&calcLogic.stringBuilder.charAt(x+1)=='0'&&calcLogic.stringBuilder.charAt(x+2)!='.')throw new ArithmeticException();
             }
         }
+
+        new CalcController(calcLogic);
     }
 }
