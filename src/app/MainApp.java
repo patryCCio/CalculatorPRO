@@ -15,7 +15,7 @@ public class MainApp {
         } catch (ArithmeticException e){
             System.err.println("Nie dzieli się przez 0!");
         } catch (NumberFormatException e){
-            System.err.println("Można używać tylko cyfr i odpowiednich znaków!");
+            System.err.println("Można używać tylko cyfr i odpowiednich znaków! Od 0 do 9 | . | , | * | / | + | - | ( | ) |");
         }
     }
 
@@ -69,20 +69,29 @@ public class MainApp {
         if(CalcLogic.getBrackets()%2!=0)throw new IOException();
         checkCorrectAction(calcLogic);
 
-
+//23+0/7+8*2+32,3+2.2()(3)
 
         System.out.println("Dz: " + calcLogic.stringBuilder);
     }
 
     private static void checkCorrectAction(CalcLogic calcLogic) throws IOException {
-        if(calcLogic.stringBuilder.charAt(0)!='0'&&calcLogic.stringBuilder.charAt(0)!='1'&&calcLogic.stringBuilder.charAt(0)!='2'&&calcLogic.stringBuilder.charAt(0)!='3'&&calcLogic.stringBuilder.charAt(0)!='4'&&
-                calcLogic.stringBuilder.charAt(0)!='5'&&calcLogic.stringBuilder.charAt(0)!='6'&&calcLogic.stringBuilder.charAt(0)!='7'&&calcLogic.stringBuilder.charAt(0)!='8'&&calcLogic.stringBuilder.charAt(0)!='9')throw new IOException();
+        if(calcLogic.stringBuilder.charAt(0)!='0'&&calcLogic.stringBuilder.charAt(0)!='1'&&calcLogic.stringBuilder.charAt(0)!='2'&&calcLogic.stringBuilder.charAt(0)!='3'&&
+                calcLogic.stringBuilder.charAt(0)!='4'&& calcLogic.stringBuilder.charAt(0)!='5'&&calcLogic.stringBuilder.charAt(0)!='6'&&calcLogic.stringBuilder.charAt(0)!='7'&&
+                calcLogic.stringBuilder.charAt(0)!='8'&&calcLogic.stringBuilder.charAt(0)!='9'&&calcLogic.stringBuilder.charAt(0)!='(')throw new IOException();
 
         if(calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='0'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='1'&&
                 calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='2'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='3'&&
                 calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='4'&& calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='5'&&
                 calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='6'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='7'&&
-                calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='8'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='9')throw new IOException();
+                calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='8'&&calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!='9'&&
+                calcLogic.stringBuilder.charAt(calcLogic.stringBuilder.length()-1)!=')')throw new IOException();
+
+        for(int x=0; x<calcLogic.stringBuilder.length();x++){
+            if(calcLogic.stringBuilder.charAt(x)!='0'&&calcLogic.stringBuilder.charAt(x)!='1'&&calcLogic.stringBuilder.charAt(x)!='2'&&calcLogic.stringBuilder.charAt(x)!='3'&&
+                    calcLogic.stringBuilder.charAt(x)!='4'&&calcLogic.stringBuilder.charAt(x)!='5'&&calcLogic.stringBuilder.charAt(x)!='6'&&calcLogic.stringBuilder.charAt(x)!='7'&&
+                    calcLogic.stringBuilder.charAt(x)!='8'&&calcLogic.stringBuilder.charAt(x)!='9'&&calcLogic.stringBuilder.charAt(x)!='('&&calcLogic.stringBuilder.charAt(x)!=')'&&
+                    calcLogic.stringBuilder.charAt(x)!='.'&&calcLogic.stringBuilder.charAt(x)!='+'&&calcLogic.stringBuilder.charAt(x)!='-'&&calcLogic.stringBuilder.charAt(x)!='*'&&calcLogic.stringBuilder.charAt(x)!='/')throw new NumberFormatException();
+        }
 
         addMultiply(calcLogic);
     }
