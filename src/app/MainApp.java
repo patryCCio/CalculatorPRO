@@ -49,8 +49,33 @@ public class MainApp {
 
     private static void checkBrackets(CalcLogic calcLogic) throws IOException{
         calcLogic.stringBuilder.append(calcLogic.helper);
-        for(int x=0; x<calcLogic.helper.length(); x++){
-
+        for(int x=0; x<calcLogic.stringBuilder.length(); x++){
+            if((calcLogic.stringBuilder.charAt(x)=='(')||(calcLogic.stringBuilder.charAt(x)==')')||(calcLogic.stringBuilder.charAt(x)=='[')||(calcLogic.stringBuilder.charAt(x)==']')){
+                CalcLogic.setBrackets(CalcLogic.getBrackets()+1);
+            }
+            if((calcLogic.stringBuilder.charAt(x)=='[')){
+                calcLogic.stringBuilder.replace(x, x+1, "(");
+            }
+            if(calcLogic.stringBuilder.charAt(x)==']'){
+                calcLogic.stringBuilder.replace(x, x+1, ")");
+            }
         }
+
+        for(int x=0; x<calcLogic.stringBuilder.length(); x++){
+            if(calcLogic.stringBuilder.charAt(x)==')'&&calcLogic.stringBuilder.charAt(x+1)==')'){
+                calcLogic.stringBuilder.replace(x+1,x+1,"*");
+            }
+            System.out.println(calcLogic.stringBuilder);
+        }
+
+        for(int x=0; x<calcLogic.stringBuilder.length(); x++){
+            if((calcLogic.stringBuilder.charAt(x)=='('&&calcLogic.stringBuilder.charAt(x+1)==')')||(calcLogic.stringBuilder.charAt(x)=='['&&calcLogic.stringBuilder.charAt(x+1)==']')){
+                CalcLogic.setBrackets(CalcLogic.getBrackets()-2);
+                calcLogic.stringBuilder.replace(x, x+2, "0");
+            }
+        }
+        if(CalcLogic.getBrackets()%2!=0)throw new IOException();
+        System.out.println(CalcLogic.getBrackets());
+        System.out.println("Dz: " + calcLogic.stringBuilder);
     }
 }
