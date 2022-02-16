@@ -7,6 +7,8 @@ public class CalcLogic {
     private ArrayList<Double> actions = new ArrayList<>();
     private ArrayList<Character> characters = new ArrayList<>();
 
+    StringBuilder stringBuilder = new StringBuilder();
+
     private Boolean isDivide;
     private Boolean isMultiply;
     private Boolean isBracket;
