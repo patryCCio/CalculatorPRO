@@ -7,13 +7,13 @@ public class CalcLogic {
     private ArrayList<Double> actions = new ArrayList<>();
     private ArrayList<Character> characters = new ArrayList<>();
 
-    StringBuilder stringBuilder = new StringBuilder();
+    public StringBuilder stringBuilder = new StringBuilder();
 
     private Boolean isDivide;
     private Boolean isMultiply;
     private Boolean isBracket;
 
-    private String helper;
+    public String helper;
 
     public Boolean getDivide() {
         return isDivide;
@@ -55,14 +55,6 @@ public class CalcLogic {
 
     public void setCharacters(ArrayList<Character> characters) {
         this.characters = characters;
-    }
-
-    public String getHelper() {
-        return helper;
-    }
-
-    public void setHelper(String helper) {
-        this.helper = helper;
     }
 
     public ArrayList<Double> getActions() {

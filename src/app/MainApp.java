@@ -1,5 +1,7 @@
 package app;
 
+import logic.CalcLogic;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,12 +23,12 @@ public class MainApp {
             System.out.println("1 - Działanie");
             System.out.println("2 - Exit");
             System.out.print("Wybór: ");
-            option = bufferedReader.read();
+            option = Integer.parseInt(bufferedReader.readLine());
             System.out.println();
 
             switch (option){
                 case 1:
-                    checkBrackets(bufferedReader);
+                    typeAction(bufferedReader);
                     break;
                 case 2:
                     System.out.println("Zamykam aplikację...");
@@ -35,9 +37,20 @@ public class MainApp {
                     System.out.println("Nie ma takiego wyboru!");
             }
         }
+        bufferedReader.close();
     }
 
-    private static void checkBrackets(BufferedReader bufferedReader) throws IOException{
+    private static void typeAction(BufferedReader bufferedReader) throws IOException{
+        System.out.print("Działanie: ");
+        CalcLogic calcLogic = new CalcLogic();
+        calcLogic.helper = bufferedReader.readLine();
+        checkBrackets(calcLogic);
+    }
 
+    private static void checkBrackets(CalcLogic calcLogic) throws IOException{
+        calcLogic.stringBuilder.append(calcLogic.helper);
+        for(int x=0; x<calcLogic.helper.length(); x++){
+
+        }
     }
 }
