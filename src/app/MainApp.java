@@ -74,6 +74,7 @@ public class MainApp {
             if (calcLogic.stringBuilder.charAt(x) == ',') {
                 calcLogic.stringBuilder.replace(x, x + 1, ".");//zabezpieczenie przed przecinkiem
             }
+            if (calcLogic.stringBuilder.charAt(x) == '*' || calcLogic.stringBuilder.charAt(x) == '/') calcLogic.setMultiply(true);
         }
         if (calcLogic.getLeftBracket() != calcLogic.getRightBracket()) throw new IOException();
         checkCorrectAction(calcLogic);

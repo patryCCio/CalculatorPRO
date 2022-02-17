@@ -9,7 +9,6 @@ public class CalcLogic {
 
     public StringBuilder stringBuilder = new StringBuilder();
 
-    private Boolean isDivide;
     private Boolean isMultiply;
     private Boolean isBracket;
 
@@ -32,14 +31,6 @@ public class CalcLogic {
 
     public void setRightBracket(int rightBracket) {
         this.rightBracket = rightBracket;
-    }
-
-    public Boolean getDivide() {
-        return isDivide;
-    }
-
-    public void setDivide(Boolean divide) {
-        isDivide = divide;
     }
 
     public Boolean getMultiply() {
