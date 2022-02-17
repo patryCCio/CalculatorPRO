@@ -1,4 +1,10 @@
 package controller;
 
-public class BracketController {
+import logic.CalcLogic;
+
+public class BracketController implements CalcOperator {
+    @Override
+    public void centralLoop(CalcLogic calcLogic) {
+
+    }
 }
