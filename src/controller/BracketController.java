@@ -7,7 +7,7 @@ public class BracketController implements CalcOperator {
     CalcData calcData;
 
     @Override
-    public void createAction() {
+    public void createAction(CalcData calcData) {
 
     }
 

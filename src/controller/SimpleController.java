@@ -29,12 +29,12 @@ public class SimpleController implements CalcOperator {
         end = x;
 
         System.out.println("String helper: " + calcData.stringHelper);
-        createAction();
+        createAction(calcData);
     }
 
     @Override
-    public void createAction() {
-        if(calcData.stringHelper.charAt(0)!='-') calcData.stringHelper.replace(0, 0, "+");
+    public void createAction(CalcData calcData) {
+       /* if(calcData.stringHelper.charAt(0)!='-') calcData.stringHelper.replace(0, 0, "+");
         for(int x = 0; x< calcData.stringHelper.length(); x++){
             if(calcData.stringHelper.charAt(x)=='/'|| calcData.stringHelper.charAt(x)=='+'|| calcData.stringHelper.charAt(x)=='-'|| calcData.stringHelper.charAt(x)=='*'){
                 calcData.characters.add(calcData.stringHelper.charAt(x));
@@ -84,6 +84,8 @@ public class SimpleController implements CalcOperator {
         calcData.actions.clear();
         calcData.characters.clear();
         return result;
+
+        */
     }
 
     @Override

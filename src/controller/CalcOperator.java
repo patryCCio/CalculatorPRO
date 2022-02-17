@@ -4,7 +4,8 @@ import data.CalcData;
 
 public interface CalcOperator {
 
-    void createAction();
+
+    void createAction(CalcData calcData);
 
     void repairAction(double result);
 }
