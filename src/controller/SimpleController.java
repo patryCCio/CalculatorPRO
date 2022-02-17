@@ -5,9 +5,13 @@ import logic.CalcLogic;
 public class SimpleController implements CalcOperator {
 
     CalcLogic calcLogic;
+    private int start = 0;
+    private int end = 0;
 
     @Override
     public void centralLoop(CalcLogic calcLogic) {
+        start = 0;
+        end = 0;
         this.calcLogic = calcLogic;
         if(calcLogic.getMultiply()){
             multiplyAction();
@@ -24,14 +28,14 @@ public class SimpleController implements CalcOperator {
         while(x>=0 && calcLogic.stringBuilder.charAt(x) != '+' && calcLogic.stringBuilder.charAt(x) != '-'){
             x--;
         }
-
+        start = x+1;
         if(x!=0)x++;
 
         do{
             calcLogic.stringHelper.append(calcLogic.stringBuilder.charAt(x));
             x++;
         }while(x<calcLogic.stringBuilder.length() && calcLogic.stringBuilder.charAt(x)!='+' && calcLogic.stringBuilder.charAt(x) != '-');
-
+        end = x;
 
         System.out.println("String helper: " + calcLogic.stringHelper);
         createAction();
@@ -56,7 +60,9 @@ public class SimpleController implements CalcOperator {
 
         calcLogic.stringHelper.delete(0, calcLogic.stringHelper.length());
 
-        getResult();
+        double result = getResult();
+        repairAction(result);
+        System.out.println(getResult());
     }
 
     private double getResult() {
@@ -69,13 +75,37 @@ public class SimpleController implements CalcOperator {
         double a = 0;
         char operator = '0';
         for(int x=0; x<calcLogic.actions.size(); x++){
+            a = calcLogic.actions.get(x);
+            operator = calcLogic.characters.get(x);
 
+            if(operator == '-'){
+                result = result - a;
+            }else if(operator == '+'){
+                result = result + a;
+            }else if(operator == '/'){
+                result = result / a;
+            }else if(operator == '*'){
+                result = result * a;
+            }else{
+                System.out.println("Coś poszło nie tak!");
+            }
         }
-        return 0;
+        calcLogic.actions.clear();
+        calcLogic.characters.clear();
+        return result;
     }
 
     @Override
-    public void repairAction() {
+    public void repairAction(double result) {
+        if(start==0){
+            calcLogic.stringBuilder.replace(start, end, String.valueOf(result));
+        }else{
+            if(result<0){
 
+            }else{
+                calcLogic.stringBuilder.replace(start, end, String.valueOf(result));
+            }
+        }
+        calcLogic.setMultiply(false);
     }
 }

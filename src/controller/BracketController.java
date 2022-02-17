@@ -18,7 +18,7 @@ public class BracketController implements CalcOperator {
     }
 
     @Override
-    public void repairAction() {
+    public void repairAction(double result) {
 
     }
 }

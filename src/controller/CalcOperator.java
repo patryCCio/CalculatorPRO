@@ -8,5 +8,5 @@ public interface CalcOperator {
 
     void createAction();
 
-    void repairAction();
+    void repairAction(double result);
 }
