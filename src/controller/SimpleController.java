@@ -56,7 +56,22 @@ public class SimpleController implements CalcOperator {
 
         calcLogic.stringHelper.delete(0, calcLogic.stringHelper.length());
 
+        getResult();
+    }
 
+    private double getResult() {
+        double result = 0;
+        if(calcLogic.actions.size() != calcLogic.characters.size()){
+            System.out.println(calcLogic.actions);
+            System.out.println(calcLogic.characters);
+            System.out.println("Błąd!");
+        }
+        double a = 0;
+        char operator = '0';
+        for(int x=0; x<calcLogic.actions.size(); x++){
+
+        }
+        return 0;
     }
 
     @Override
