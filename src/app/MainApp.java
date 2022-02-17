@@ -56,6 +56,7 @@ public class MainApp {
     //Sprawdzanie nawiasów, zamiana przecinków na kropki, nawiasów kwadratowych na okrągłe
     private static void checkBrackets(CalcLogic calcLogic) throws IOException {
         calcLogic.stringBuilder.append(calcLogic.helper);
+        calcLogic.helper = "";
         for (int x = 0; x < calcLogic.stringBuilder.length(); x++) {
             if (calcLogic.stringBuilder.charAt(x) == '(') {
                 calcLogic.setLeftBracket(calcLogic.getLeftBracket() + 1);

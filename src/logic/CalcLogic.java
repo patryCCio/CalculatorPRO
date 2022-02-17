@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class CalcLogic {
 
-    private ArrayList<Double> actions = new ArrayList<>();
-    private ArrayList<Character> characters = new ArrayList<>();
+    public ArrayList<Double> actions = new ArrayList<>();
+    public ArrayList<Character> characters = new ArrayList<>();
 
     public StringBuilder stringBuilder = new StringBuilder();
+    public StringBuilder stringHelper = new StringBuilder();
 
     private Boolean isMultiply;
     private Boolean isBracket;
@@ -59,19 +60,4 @@ public class CalcLogic {
         CalcLogic.brackets = brackets;
     }
 
-    public ArrayList<Character> getCharacters() {
-        return characters;
-    }
-
-    public void setCharacters(ArrayList<Character> characters) {
-        this.characters = characters;
-    }
-
-    public ArrayList<Double> getActions() {
-        return actions;
-    }
-
-    public void setActions(ArrayList<Double> actions) {
-        this.actions = actions;
-    }
 }

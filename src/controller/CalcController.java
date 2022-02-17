@@ -14,7 +14,15 @@ public class CalcController{
                 if(calcLogic.stringBuilder.charAt(x)=='*'||calcLogic.stringBuilder.charAt(x)=='/')calcLogic.setMultiply(true);
             }
 
-        }while(calcLogic.getMultiply() && calcLogic.getBracket());
+            if(calcLogic.getBracket()){
+                BracketController bracketController = new BracketController();
+                bracketController.centralLoop(calcLogic);
+            }else{
+                SimpleController simpleController = new SimpleController();
+                simpleController.centralLoop(calcLogic);
+            }
+
+        }while(calcLogic.getMultiply() || calcLogic.getBracket());
 
 
         System.out.println("Wszystko poszło zgodnie z planem!");
