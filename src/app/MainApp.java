@@ -146,5 +146,6 @@ public class MainApp {
         }
 
         new CalcController(calcLogic);
+
     }
 }
