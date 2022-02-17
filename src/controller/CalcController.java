@@ -10,7 +10,7 @@ public class CalcController {
         checkAction();
     }
 
-    private void checkAction(){
+    private void checkAction() {
         System.out.println("Wszystko poszło zgodnie z planem!");
         System.out.println("Działanie otrzymane z MainApp: " + calcLogic.stringBuilder);
     }

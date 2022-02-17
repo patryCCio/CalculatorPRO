@@ -76,7 +76,6 @@ public class MainApp {
             }
         }
         if (calcLogic.getLeftBracket() != calcLogic.getRightBracket()) throw new IOException();
-        deleteUselessBrackets(calcLogic);
         checkCorrectAction(calcLogic);
     }
 
@@ -106,19 +105,15 @@ public class MainApp {
         fillEmptyBrackets(calcLogic);
     }
 
-    private static void deleteUselessBrackets(CalcLogic calcLogic) {
-
-    }
-
     //dodawanie znakow mnozenia np. 3(2+8)(4-3) = 3*(2+8)*(4-3)
     private static void addMultiply(CalcLogic calcLogic) {
         for (int x = 1; x < calcLogic.stringBuilder.length(); x++) {
-            if (calcLogic.stringBuilder.charAt(x) == '(' && calcLogic.stringBuilder.charAt(x - 1) != '/' && calcLogic.stringBuilder.charAt(x - 1) != '*' && calcLogic.stringBuilder.charAt(x - 1) != '-' && calcLogic.stringBuilder.charAt(x - 1) != '+') {
+            if (x + 1 < calcLogic.stringBuilder.length() && calcLogic.stringBuilder.charAt(x - 1) != '(' && calcLogic.stringBuilder.charAt(x) == '(' && calcLogic.stringBuilder.charAt(x - 1) != '/' && calcLogic.stringBuilder.charAt(x - 1) != '*' && calcLogic.stringBuilder.charAt(x - 1) != '-' && calcLogic.stringBuilder.charAt(x - 1) != '+') {
                 calcLogic.stringBuilder.replace(x, x + 1, "*(");
             }
         }
         for (int x = 0; x < calcLogic.stringBuilder.length() - 1; x++) {
-            if (calcLogic.stringBuilder.charAt(x) == ')' && calcLogic.stringBuilder.charAt(x + 1) != '/' && calcLogic.stringBuilder.charAt(x + 1) != '*' && calcLogic.stringBuilder.charAt(x + 1) != '-' && calcLogic.stringBuilder.charAt(x + 1) != '+') {
+            if (x != 0 && calcLogic.stringBuilder.charAt(x + 1) != ')' && calcLogic.stringBuilder.charAt(x) == ')' && calcLogic.stringBuilder.charAt(x + 1) != '/' && calcLogic.stringBuilder.charAt(x + 1) != '*' && calcLogic.stringBuilder.charAt(x + 1) != '-' && calcLogic.stringBuilder.charAt(x + 1) != '+') {
                 calcLogic.stringBuilder.replace(x, x + 1, ")*");
             }
         }
