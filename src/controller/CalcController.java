@@ -11,6 +11,12 @@ public class CalcController{
         this.calcData = calcData;
         do{
             checkAction(calcData);
+            if(calcData.isSpecialBracket()){
+                SpecialBracketController specialBracketController = new SpecialBracketController();
+                specialBracketController.createAction(this.calcData);
+            }
+
+
             System.out.println("Mnożenie dzielenie: " + calcData.isMultiply());
             System.out.println("Nawiasy: " + calcData.isBracket());
             System.out.println("Specjalne nawiasy: " + calcData.isSpecialBracket());
@@ -44,16 +50,59 @@ public class CalcController{
         System.out.println(calcData.toString());
     }
 
+    public static void createArrayStringHelper(CalcData calcData){
+        calcData.helper = "";
+        if(calcData.stringHelper.charAt(0)!='-'){
+            calcData.stringHelper.replace(0, 0, "+");
+        }
+
+        for(int x=0; x<calcData.stringHelper.length(); x++){
+            if(calcData.stringHelper.charAt(x) == '+' || calcData.stringHelper.charAt(x) == '-'){
+                calcData.characters.add(calcData.stringHelper.charAt(x));
+            }else{
+                do{
+                    calcData.helper = calcData.helper + calcData.stringHelper.charAt(x);
+                    x++;
+                }while(x < calcData.stringHelper.length() && calcData.stringHelper.charAt(x) != '-' && calcData.stringHelper.charAt(x) != '+');
+                calcData.actions.add(Double.valueOf(calcData.helper));
+                calcData.helper = "";
+                x--;
+            }
+        }
+
+        calcData.stringHelper.delete(0, calcData.stringHelper.length());
+    }
+
+    public static void checkStringHelper(CalcData calcData){
+        calcData.setMultiply(false);
+        for(int x=0; x<calcData.stringHelper.length(); x++){
+            if(calcData.stringHelper.charAt(x) == '*' || calcData.stringHelper.charAt(x) == '/') calcData.setMultiply(true);
+        }
+    }
+
     public static void checkAction(CalcData calcData){
+        CalcData.howSpecialBracket = 0;
         calcData.setMultiply(false);
         calcData.setBracket(false);
         calcData.setSpecialBracket(false);
 
         for(int x=2; x<calcData.stringBuilder.length(); x++){
-            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='*')calcData.setSpecialBracket(true);
-            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='/')calcData.setSpecialBracket(true);
-            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='-')calcData.setSpecialBracket(true);
-            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='+')calcData.setSpecialBracket(true);
+            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='*'){
+                calcData.setSpecialBracket(true);
+                CalcData.howSpecialBracket++;
+            }
+            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='/'){
+                calcData.setSpecialBracket(true);
+                CalcData.howSpecialBracket++;
+            }
+            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='-'){
+                calcData.setSpecialBracket(true);
+                CalcData.howSpecialBracket++;
+            }
+            if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='+'){
+                calcData.setSpecialBracket(true);
+                CalcData.howSpecialBracket++;
+            }
         }
 
         for(int x=0; x<calcData.stringBuilder.length(); x++){

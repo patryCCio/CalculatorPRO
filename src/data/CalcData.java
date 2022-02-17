@@ -13,6 +13,7 @@ public class CalcData {
     private boolean isMultiply;
     private boolean isBracket;
     private boolean isSpecialBracket;
+    public static int howSpecialBracket = 0;
 
     public double result;
 
