@@ -1,10 +1,8 @@
 package controller;
 
-import logic.CalcLogic;
+import data.CalcData;
 
 public interface CalcOperator {
-
-    void centralLoop(CalcLogic calcLogic);
 
     void createAction();
 

@@ -1,35 +1,75 @@
 package controller;
 
-import logic.CalcLogic;
+import data.CalcData;
 
 public class CalcController{
 
-    public void checkAction(CalcLogic calcLogic) {
-        calcLogic.setMultiply(false);
-        calcLogic.setBracket(false);
+    CalcData calcData;
 
-        do{
-            for(int x=0; x<calcLogic.stringBuilder.length(); x++){
-                if(calcLogic.stringBuilder.charAt(x)=='(')calcLogic.setBracket(true);
-                if(calcLogic.stringBuilder.charAt(x)=='*'||calcLogic.stringBuilder.charAt(x)=='/')calcLogic.setMultiply(true);
-            }
+    public void doAction(CalcData calcData) {
+        this.calcData = calcData;
 
-            if(calcLogic.getBracket()){
-                BracketController bracketController = new BracketController();
-                bracketController.centralLoop(calcLogic);
+        checkAction();
+
+
+    }
+
+    public static void checkAction(){
+
+    }
+
+    private void simpleAction(){
+        if(calcData.stringBuilder.charAt(0)!='-') calcData.stringBuilder.replace(0, 0, "+");
+        for(int x = 0; x< calcData.stringBuilder.length(); x++){
+            if(calcData.stringBuilder.charAt(x)=='/'|| calcData.stringBuilder.charAt(x)=='+'|| calcData.stringBuilder.charAt(x)=='-'|| calcData.stringBuilder.charAt(x)=='*'){
+                calcData.characters.add(calcData.stringBuilder.charAt(x));
             }else{
-                SimpleController simpleController = new SimpleController();
-                simpleController.centralLoop(calcLogic);
+                do{
+                    calcData.helper = calcData.helper + calcData.stringBuilder.charAt(x);
+                    x++;
+                }while(x< calcData.stringBuilder.length() && calcData.stringBuilder.charAt(x) != '*' && calcData.stringBuilder.charAt(x) != '/');
+                calcData.actions.add(Double.valueOf(calcData.helper));
+                calcData.helper = "";
+                x--;
             }
+        }
 
-        }while(calcLogic.getMultiply() || calcLogic.getBracket());
 
+        calcData.stringBuilder.delete(0, calcData.stringBuilder.length());
 
-        System.out.println("Wszystko poszło zgodnie z planem!");
-        System.out.println("Działanie otrzymane z MainApp: " + calcLogic.stringBuilder);
-        System.out.println("Ile nawiasów: " + calcLogic.getLeftBracket());
-        System.out.println("Czy jest mnożenie lub dzielenie: " + calcLogic.getMultiply());
-        System.out.println("Czy są nawiasy: " + calcLogic.getBracket());
+        calcData.result = getResult();
+        System.out.println(calcData.toString());
+
+    }
+
+    public double getResult() {
+        double result = 0;
+        if(calcData.actions.size() != calcData.characters.size()){
+            System.out.println(calcData.actions);
+            System.out.println(calcData.characters);
+            System.out.println("Błąd!");
+        }
+        double a = 0;
+        char operator = '0';
+        for(int x = 0; x< calcData.actions.size(); x++){
+            a = calcData.actions.get(x);
+            operator = calcData.characters.get(x);
+
+            if(operator == '-'){
+                result = result - a;
+            }else if(operator == '+'){
+                result = result + a;
+            }else if(operator == '/'){
+                result = result / a;
+            }else if(operator == '*'){
+                result = result * a;
+            }else{
+                System.out.println("Coś poszło nie tak!");
+            }
+        }
+        calcData.actions.clear();
+        calcData.characters.clear();
+        return result;
     }
 
 }

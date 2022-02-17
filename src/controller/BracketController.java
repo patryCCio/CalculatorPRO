@@ -1,16 +1,10 @@
 package controller;
 
-import logic.CalcLogic;
+import data.CalcData;
 
 public class BracketController implements CalcOperator {
 
-    CalcLogic calcLogic;
-
-    @Override
-    public void centralLoop(CalcLogic calcLogic) {
-        this.calcLogic = calcLogic;
-        System.out.println("Z nawiasami");
-    }
+    CalcData calcData;
 
     @Override
     public void createAction() {
