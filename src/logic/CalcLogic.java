@@ -13,7 +13,26 @@ public class CalcLogic {
     private Boolean isMultiply;
     private Boolean isBracket;
 
+    private int leftBracket;
+    private int rightBracket;
+
     public String helper;
+
+    public int getLeftBracket() {
+        return leftBracket;
+    }
+
+    public void setLeftBracket(int leftBracket) {
+        this.leftBracket = leftBracket;
+    }
+
+    public int getRightBracket() {
+        return rightBracket;
+    }
+
+    public void setRightBracket(int rightBracket) {
+        this.rightBracket = rightBracket;
+    }
 
     public Boolean getDivide() {
         return isDivide;
