@@ -20,7 +20,7 @@ public class CalcController{
             }else if(calcData.isMultiply()){
                 MultiplyController multiplyController = new MultiplyController();
                 multiplyController.createAction(this.calcData);
-            }else{
+            }else if(calcData.isNormal()){
                 NormalController normalController = new NormalController();
                 normalController.createAction(this.calcData);
             }
@@ -96,8 +96,12 @@ public class CalcController{
         createMultiplyAction(calcData, start, end);
     }
 
-    public static void checkStartEnd(CalcData calcData, int start, int end){
+    public static void checkStartEnd(CalcData calcData, StringBuilder sb,int start, int end){
+        start = calcData.stringBuilder.indexOf(sb.toString());
+        end = start + sb.length();
 
+        calcData.start = start;
+        calcData.end = end;
     }
 
     public static void createMultiplyAction(CalcData calcData, int start, int end) {
@@ -184,6 +188,7 @@ public class CalcController{
         calcData.setMultiply(false);
         calcData.setBracket(false);
         calcData.setSpecialBracket(false);
+        calcData.setNormal(false);
 
         for(int x=2; x<calcData.stringBuilder.length(); x++){
             if(calcData.stringBuilder.charAt(x)=='-'&&calcData.stringBuilder.charAt(x-1)=='('&&calcData.stringBuilder.charAt(x-2)=='*'){
@@ -219,6 +224,8 @@ public class CalcController{
         if(calcData.getLeftBracket()!=0){
             calcData.setBracket(true);
         }
+
+        if(!calcData.isBracket()&&!calcData.isMultiply()&&!calcData.isSpecialBracket())calcData.setNormal(true);
     }
 
     public static double getResult(CalcData calcData) {

@@ -16,9 +16,14 @@ public class CalcData {
     public StringBuilder stringHelper = new StringBuilder();
     public StringBuilder stringSpecialHelper = new StringBuilder();
 
+    public int start;
+    public int end;
+
     private boolean isMultiply;
     private boolean isBracket;
     private boolean isSpecialBracket;
+    private boolean isNormal;
+
     public static int howSpecialBracket = 0;
 
     public double result;
@@ -27,6 +32,14 @@ public class CalcData {
     private int rightBracket;
 
     public String helper;
+
+    public boolean isNormal() {
+        return isNormal;
+    }
+
+    public void setNormal(boolean normal) {
+        isNormal = normal;
+    }
 
     public boolean isMultiply() {
         return isMultiply;
