@@ -9,6 +9,7 @@ public class CalcData {
 
     public StringBuilder stringBuilder = new StringBuilder();
     public StringBuilder stringHelper = new StringBuilder();
+    public StringBuilder stringSpecialHelper = new StringBuilder();
 
     private boolean isMultiply;
     private boolean isBracket;

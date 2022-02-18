@@ -7,6 +7,15 @@ public class MultiplyController implements CalcOperator{
     private int start = 0;
     private int end = 0;
 
+    @Override
+    public void createAction(CalcData calcData) {
+        this.calcData = calcData;
+        do{
+            multiplyAction();
+            CalcController.checkAction(calcData);
+        }while(calcData.isMultiply());
+    }
+
     private void multiplyAction() {
         int x=0;
         System.out.println(calcData.stringBuilder);
@@ -28,12 +37,11 @@ public class MultiplyController implements CalcOperator{
         end = x;
 
         System.out.println("String helper: " + calcData.stringHelper);
-        createAction(calcData);
+        createMultiplyAction();
     }
 
-    @Override
-    public void createAction(CalcData calcData) {
-       /* if(calcData.stringHelper.charAt(0)!='-') calcData.stringHelper.replace(0, 0, "+");
+    private void createMultiplyAction() {
+        if(calcData.stringHelper.charAt(0)!='-') calcData.stringHelper.replace(0, 0, "+");
         for(int x = 0; x< calcData.stringHelper.length(); x++){
             if(calcData.stringHelper.charAt(x)=='/'|| calcData.stringHelper.charAt(x)=='+'|| calcData.stringHelper.charAt(x)=='-'|| calcData.stringHelper.charAt(x)=='*'){
                 calcData.characters.add(calcData.stringHelper.charAt(x));
@@ -50,41 +58,8 @@ public class MultiplyController implements CalcOperator{
 
         calcData.stringHelper.delete(0, calcData.stringHelper.length());
 
-        CalcController calcController = new CalcController();
-        double result = calcController.getResult();
+        double result = CalcController.getResult(calcData);
         repairAction(result);
-    }
-
-    private double getResult() {
-        double result = 0;
-        if(calcData.actions.size() != calcData.characters.size()){
-            System.out.println(calcData.actions);
-            System.out.println(calcData.characters);
-            System.out.println("Błąd!");
-        }
-        double a = 0;
-        char operator = '0';
-        for(int x = 0; x< calcData.actions.size(); x++){
-            a = calcData.actions.get(x);
-            operator = calcData.characters.get(x);
-
-            if(operator == '-'){
-                result = result - a;
-            }else if(operator == '+'){
-                result = result + a;
-            }else if(operator == '/'){
-                result = result / a;
-            }else if(operator == '*'){
-                result = result * a;
-            }else{
-                System.out.println("Coś poszło nie tak!");
-            }
-        }
-        calcData.actions.clear();
-        calcData.characters.clear();
-        return result;
-
-        */
     }
 
     @Override
@@ -94,6 +69,9 @@ public class MultiplyController implements CalcOperator{
         }else{
             calcData.stringBuilder.replace(start, end, String.valueOf(result));
         }
-        calcData.setMultiply(false);
+    }
+
+    public static void specialBracketMultiply(CalcData calcData){
+
     }
 }

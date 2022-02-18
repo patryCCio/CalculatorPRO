@@ -15,6 +15,10 @@ public class CalcController{
                 SpecialBracketController specialBracketController = new SpecialBracketController();
                 specialBracketController.createAction(this.calcData);
             }
+            if(calcData.isMultiply()){
+                MultiplyController multiplyController = new MultiplyController();
+                multiplyController.createAction(this.calcData);
+            }
 
 
             System.out.println("Mnożenie dzielenie: " + calcData.isMultiply());
