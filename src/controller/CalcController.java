@@ -15,6 +15,10 @@ public class CalcController{
                 SpecialBracketController specialBracketController = new SpecialBracketController();
                 specialBracketController.createAction(this.calcData);
             }
+            if(calcData.isBracket()){
+                BracketController bracketController = new BracketController();
+                bracketController.createAction(calcData);
+            }
             if(calcData.isMultiply()){
                 MultiplyController multiplyController = new MultiplyController();
                 multiplyController.createAction(this.calcData);
@@ -31,7 +35,7 @@ public class CalcController{
     }
 
     private void createArray() {
-        if(calcData.stringBuilder.charAt(0)!='-'){
+        if(calcData.stringBuilder.charAt(0)!='-' && calcData.stringBuilder.charAt(0) != '+'){
             calcData.stringBuilder.replace(0, 0, "+");
         }
 
@@ -54,9 +58,8 @@ public class CalcController{
         System.out.println(calcData.toString());
     }
 
-    public static void createActionMultiply(CalcData calcData){
+    public static void createActionMultiply(CalcData calcData, int start, int end){
         int x=0;
-        int start, end;
 
         while(calcData.stringHelper.charAt(x)!='*' && calcData.stringHelper.charAt(x)!='/'){
             x++;
@@ -89,8 +92,11 @@ public class CalcController{
         createMultiplyAction(calcData, start, end);
     }
 
-    private static void createMultiplyAction(CalcData calcData, int start, int end) {
+    public static void createMultiplyAction(CalcData calcData, int start, int end) {
         calcData.helper = "";
+        int startSpecial=0;
+        int endSpecial=0;
+
         if(calcData.stringSpecialHelper.charAt(0)!='-') calcData.stringSpecialHelper.replace(0, 0, "+");
         for(int x = 0; x< calcData.stringSpecialHelper.length(); x++){
             if(calcData.stringSpecialHelper.charAt(x)=='/'|| calcData.stringSpecialHelper.charAt(x)=='+'|| calcData.stringSpecialHelper.charAt(x)=='-'|| calcData.stringSpecialHelper.charAt(x)=='*'){
@@ -105,9 +111,20 @@ public class CalcController{
                 x--;
             }
         }
-        int length = calcData.stringSpecialHelper.length();
-        int startSpecial = calcData.stringBuilder.indexOf(String.valueOf(calcData.stringSpecialHelper));
-        int endSpecial = startSpecial + length;
+        if(calcData.stringSpecialHelper.charAt(0)=='+'){
+            calcData.stringSpecialHelper.delete(0, 1);
+            int length = calcData.stringSpecialHelper.length();
+            startSpecial = calcData.stringBuilder.indexOf(String.valueOf(calcData.stringSpecialHelper));
+            endSpecial = startSpecial + length;
+            startSpecial--;
+            start--;
+            calcData.stringSpecialHelper.replace(0, 0, "+");
+        }else{
+            int length = calcData.stringSpecialHelper.length();
+            startSpecial = calcData.stringBuilder.indexOf(String.valueOf(calcData.stringSpecialHelper));
+            endSpecial = startSpecial + length;
+        }
+
         calcData.stringSpecialHelper.delete(0, calcData.stringSpecialHelper.length());
         double result = CalcController.getResult(calcData);
         if(result>=0){
@@ -123,7 +140,7 @@ public class CalcController{
 
     public static void createArrayStringHelper(CalcData calcData){
         calcData.helper = "";
-        if(calcData.stringHelper.charAt(0)!='-'){
+        if(calcData.stringHelper.charAt(0)!='-' && calcData.stringHelper.charAt(0) != '+'){
             calcData.stringHelper.replace(0, 0, "+");
         }
 

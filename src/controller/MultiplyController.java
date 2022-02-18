@@ -36,7 +36,6 @@ public class MultiplyController implements CalcOperator{
         }while(x< calcData.stringBuilder.length() && calcData.stringBuilder.charAt(x)!='+' && calcData.stringBuilder.charAt(x) != '-');
         end = x;
 
-        System.out.println("String helper: " + calcData.stringHelper);
         createMultiplyAction();
     }
 

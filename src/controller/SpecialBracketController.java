@@ -7,6 +7,7 @@ public class SpecialBracketController implements CalcOperator {
     CalcData calcData;
     int actualSpecialBracket = 0;
     int start, end;
+    double result;
 
     @Override
     public void createAction(CalcData calcData) {
@@ -20,7 +21,7 @@ public class SpecialBracketController implements CalcOperator {
 
     //2*(-3+2/3) 2*(-3+23+2) 2*(-3+23+2)+(-3+23-5)
     private void checkSpecialBracket() {
-        double result = 0;
+        result = 0;
         actualSpecialBracket = 0;
         int x = 2;
         do {
@@ -38,7 +39,7 @@ public class SpecialBracketController implements CalcOperator {
         CalcController.checkStringHelper(calcData);
         if(calcData.isMultiply()){
             do{
-                CalcController.createActionMultiply(calcData);
+                CalcController.createActionMultiply(calcData, start, end);
             }while(calcData.isMultiply());
             CalcController.createArrayStringHelper(calcData);
             result = CalcController.getResult(calcData);
@@ -65,6 +66,7 @@ public class SpecialBracketController implements CalcOperator {
     }
 
     //3+3*(-3*2)
+    //3*(-2*3+3) nie dziala
 
     private void createActionMultiply(double result, int start, int end) {
         calcData.helper = "";
@@ -88,12 +90,17 @@ public class SpecialBracketController implements CalcOperator {
         if(result>=0){
             calcData.stringBuilder.replace(start, end, String.valueOf(result));
         }else{
-            if(calcData.stringBuilder.charAt(start-1)=='+'){
-                calcData.stringBuilder.replace(start-1, end, String.valueOf(result));
+            if(start==0){
+                calcData.stringBuilder.replace(start, end, String.valueOf(result));
             }else{
-                result -= 2*result;
-                calcData.stringBuilder.replace(start-1, end, "+" + result);
+                if(calcData.stringBuilder.charAt(start-1)=='+'){
+                    calcData.stringBuilder.replace(start-1, end, String.valueOf(result));
+                }else{
+                    result -= 2*result;
+                    calcData.stringBuilder.replace(start-1, end, "+" + result);
+                }
             }
+
         }
 
     }
