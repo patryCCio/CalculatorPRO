@@ -37,7 +37,11 @@ public class SpecialBracketController implements CalcOperator {
 
         CalcController.checkStringHelper(calcData);
         if(calcData.isMultiply()){
-
+            do{
+                CalcController.createActionMultiply(calcData);
+            }while(calcData.isMultiply());
+            CalcController.createArrayStringHelper(calcData);
+            result = CalcController.getResult(calcData);
         }else{
             CalcController.createArrayStringHelper(calcData);
             result = CalcController.getResult(calcData);
@@ -46,12 +50,21 @@ public class SpecialBracketController implements CalcOperator {
         if(result>0){
             calcData.stringBuilder.replace(start, end, String.valueOf(result));
         }else{
-            System.out.println("Ujemny result");
+            if(calcData.stringBuilder.charAt(start-1)=='-'){
+                result = result - 2*result;
+                calcData.stringBuilder.replace(start-1, end, "+" + result);
+            }else if(calcData.stringBuilder.charAt(start-1)=='+'){
+                calcData.stringBuilder.replace(start-1, end, String.valueOf(result));
+            }else{
+                System.out.println("MNOŻENIE LUB DZIELENIE!");
+            }
         }
 
-        if(calcData.stringBuilder.charAt(start-1)=='*'){
+        CalcController.checkAction(calcData);
 
-        }
+    }
+
+    private void createActionMultiply() {
 
     }
 
