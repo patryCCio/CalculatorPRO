@@ -14,24 +14,28 @@ public class CalcController{
             if(calcData.isSpecialBracket()){
                 SpecialBracketController specialBracketController = new SpecialBracketController();
                 specialBracketController.createAction(this.calcData);
-            }
-            if(calcData.isBracket()){
+            }else if(calcData.isBracket()){
                 BracketController bracketController = new BracketController();
-                bracketController.createAction(calcData);
-            }
-            if(calcData.isMultiply()){
+                bracketController.createAction(this.calcData);
+            }else if(calcData.isMultiply()){
                 MultiplyController multiplyController = new MultiplyController();
                 multiplyController.createAction(this.calcData);
+            }else{
+                NormalController normalController = new NormalController();
+                normalController.createAction(this.calcData);
             }
-
-
-            System.out.println("Mnożenie dzielenie: " + calcData.isMultiply());
-            System.out.println("Nawiasy: " + calcData.isBracket());
-            System.out.println("Specjalne nawiasy: " + calcData.isSpecialBracket());
         }while(calcData.isSpecialBracket() || calcData.isBracket() || calcData.isMultiply());
         System.out.println("Przeszedłem dalej!");
 
         createArray();
+    }
+
+    public static void createMultiply(CalcData calcData, StringBuilder stringBuilder){
+
+    }
+
+    public static void createNormal(CalcData calcData, StringBuilder stringBuilder){
+
     }
 
     private void createArray() {
@@ -90,6 +94,10 @@ public class CalcController{
 
         System.out.println("String special helper: " + calcData.stringSpecialHelper);
         createMultiplyAction(calcData, start, end);
+    }
+
+    public static void checkStartEnd(CalcData calcData, int start, int end){
+
     }
 
     public static void createMultiplyAction(CalcData calcData, int start, int end) {

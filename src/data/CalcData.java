@@ -8,6 +8,11 @@ public class CalcData {
     public ArrayList<Character> characters = new ArrayList<>();
 
     public StringBuilder stringBuilder = new StringBuilder();
+    public StringBuilder multiply = new StringBuilder();
+    public StringBuilder bracket = new StringBuilder();
+    public StringBuilder specialBracket = new StringBuilder();
+    public StringBuilder normal = new StringBuilder();
+
     public StringBuilder stringHelper = new StringBuilder();
     public StringBuilder stringSpecialHelper = new StringBuilder();
 
