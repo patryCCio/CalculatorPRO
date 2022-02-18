@@ -128,13 +128,13 @@ public class CalcController{
         }
 
         for(int x=0; x<calcData.stringHelper.length(); x++){
-            if(calcData.stringHelper.charAt(x) == '+' || calcData.stringHelper.charAt(x) == '-'){
+            if(calcData.stringHelper.charAt(x) == '+' || calcData.stringHelper.charAt(x) == '-' || calcData.stringHelper.charAt(x) == '*' || calcData.stringHelper.charAt(x) == '/'){
                 calcData.characters.add(calcData.stringHelper.charAt(x));
             }else{
                 do{
                     calcData.helper = calcData.helper + calcData.stringHelper.charAt(x);
                     x++;
-                }while(x < calcData.stringHelper.length() && calcData.stringHelper.charAt(x) != '-' && calcData.stringHelper.charAt(x) != '+');
+                }while(x < calcData.stringHelper.length() && calcData.stringHelper.charAt(x) != '-' && calcData.stringHelper.charAt(x) != '+' && calcData.stringHelper.charAt(x) != '*' && calcData.stringHelper.charAt(x) != '/');
                 calcData.actions.add(Double.valueOf(calcData.helper));
                 calcData.helper = "";
                 x--;

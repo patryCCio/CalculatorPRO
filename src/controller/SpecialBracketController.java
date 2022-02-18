@@ -56,7 +56,7 @@ public class SpecialBracketController implements CalcOperator {
             }else if(calcData.stringBuilder.charAt(start-1)=='+'){
                 calcData.stringBuilder.replace(start-1, end, String.valueOf(result));
             }else{
-                System.out.println("MNOŻENIE LUB DZIELENIE!");
+                createActionMultiply(result, start, end);
             }
         }
 
@@ -64,7 +64,37 @@ public class SpecialBracketController implements CalcOperator {
 
     }
 
-    private void createActionMultiply() {
+    //3+3*(-3*2)
+
+    private void createActionMultiply(double result, int start, int end) {
+        calcData.helper = "";
+        calcData.stringHelper.append(result);
+        calcData.stringHelper.append(calcData.stringBuilder.charAt(start-1));
+        start--;
+        while(start >= 0 && calcData.stringBuilder.charAt(start) != '(' && calcData.stringBuilder.charAt(start) != '-' && calcData.stringBuilder.charAt(start) != '+'){
+            start--;
+        }
+        start++;
+        int x = start;
+        while(calcData.stringBuilder.charAt(x)!= '('){
+            calcData.stringHelper.append(calcData.stringBuilder.charAt(x));
+            x++;
+        }
+        calcData.stringHelper.delete(calcData.stringHelper.length()-1, calcData.stringHelper.length());
+
+        CalcController.createArrayStringHelper(calcData);
+        result = CalcController.getResult(calcData);
+
+        if(result>=0){
+            calcData.stringBuilder.replace(start, end, String.valueOf(result));
+        }else{
+            if(calcData.stringBuilder.charAt(start-1)=='+'){
+                calcData.stringBuilder.replace(start-1, end, String.valueOf(result));
+            }else{
+                result -= 2*result;
+                calcData.stringBuilder.replace(start-1, end, "+" + result);
+            }
+        }
 
     }
 
