@@ -13,7 +13,6 @@ public class MultiplyController implements CalcOperator{
             CalcController.createArray(calcData, calcData.multiply);
             CalcController.deleteBuilder(calcData.multiply);
             double result = CalcController.getResult(calcData);
-
             CalcController.saveResult(calcData, result);
             CalcController.checkAction(calcData);
         }while(calcData.isMultiply());

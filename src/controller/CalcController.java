@@ -50,6 +50,28 @@ public class CalcController{
 
     }
 
+    public static void createMultiply(StringBuilder sb, StringBuilder multiply){
+        int x=0;
+
+        while(x < sb.length() && sb.charAt(x)!='+' && sb.charAt(x)!='-'){
+            x++;
+        }
+
+        x--;
+
+        while(x>=0 && sb.charAt(x) != '+' && sb.charAt(x) != '-' && sb.charAt(x) != '('){
+            x--;
+        }
+
+        if(x!=0 && sb.charAt(0)!='-')x++;
+
+        do{
+            multiply.append(sb.charAt(x));
+            x++;
+        }while(x< sb.length() && sb.charAt(x)!='+' && sb.charAt(x) != '-');
+
+    }
+
     public static void createBracket(CalcData calcData, StringBuilder sb, int actualBracket) {
         actualBracket = 0;
         int x = 0;
@@ -71,7 +93,7 @@ public class CalcController{
 
         if(calcData.isMultiply()){
             do{
-                createMultiply(calcData, calcData.multiply);
+                createMultiply(calcData.bracket, calcData.multiply);
                 checkStartEnd(calcData, calcData.multiply, from);
 
 
@@ -148,6 +170,8 @@ public class CalcController{
     }
 
     public static void saveResult(CalcData calcData, double result){
+        if(calcData.start > 0&&calcData.stringBuilder.charAt(calcData.start-1)!='-'&&calcData.stringBuilder.charAt(calcData.start-1)!='+'&&calcData.stringBuilder.charAt(calcData.start-1)!='/'&&calcData.stringBuilder.charAt(calcData.start-1)!='*')calcData.start++;
+
         if(result >= 0){
             calcData.stringBuilder.replace(calcData.start, calcData.end, String.valueOf(result));
         }else{
@@ -156,7 +180,7 @@ public class CalcController{
             }else{
                 if(calcData.stringBuilder.charAt(calcData.start-1)=='-'){
                     result = result - 2*result;
-                    calcData.stringBuilder.replace(calcData.start - 1, calcData.end, String.valueOf(result));
+                    calcData.stringBuilder.replace(calcData.start - 1, calcData.end, "+" + result);
                 }else if(calcData.stringBuilder.charAt(calcData.start-1)=='+'){
                     calcData.stringBuilder.replace(calcData.start - 1, calcData.end, String.valueOf(result));
                 }else if(calcData.stringBuilder.charAt(calcData.start-1) == '*' || calcData.stringBuilder.charAt(calcData.start-1) == '/'){
