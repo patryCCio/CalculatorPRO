@@ -7,7 +7,6 @@ public class NormalController implements CalcOperator{
 
     @Override
     public void createAction(CalcData calcData) {
-        calcData.start = 0; calcData.end = 0;
 
         for(int x=0; x<calcData.stringBuilder.length(); x++){
             calcData.normal.append(calcData.stringBuilder.charAt(x));

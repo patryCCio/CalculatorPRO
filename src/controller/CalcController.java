@@ -12,13 +12,16 @@ public class CalcController{
             if(calcData.isSpecialBracket()){
                 SpecialBracketController specialBracketController = new SpecialBracketController();
                 specialBracketController.createAction(calcData);
-            }else if(calcData.isBracket()){
+            }
+            if(calcData.isBracket()){
                 BracketController bracketController = new BracketController();
                 bracketController.createAction(calcData);
-            }else if(calcData.isMultiply()){
+            }
+            if(calcData.isMultiply()){
                 MultiplyController multiplyController = new MultiplyController();
                 multiplyController.createAction(calcData);
-            }else if(calcData.isNormal()){
+            }
+            if(calcData.isNormal()){
                 NormalController normalController = new NormalController();
                 normalController.createAction(calcData);
             }
@@ -122,6 +125,9 @@ public class CalcController{
     public static void checkStartEnd(CalcData calcData, StringBuilder sb){
         int start;
         int end;
+
+        calcData.start = 0;
+        calcData.end = 0;
 
         start = calcData.stringBuilder.indexOf(sb.toString());
         end = start + sb.length();
