@@ -148,7 +148,6 @@ public class CalcController{
     }
 
     public static void saveResult(CalcData calcData, double result){
-        System.out.println("t");
         if(result >= 0){
             calcData.stringBuilder.replace(calcData.start, calcData.end, String.valueOf(result));
         }else{
