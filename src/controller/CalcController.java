@@ -4,7 +4,7 @@ import data.CalcData;
 
 public class CalcController{
 
-
+    //v
     public void doAction(CalcData calcData) {
         calcData.helper = "";
         checkAction(calcData);
@@ -37,7 +37,7 @@ public class CalcController{
             x++;
         }
 
-        while(x>=0 && calcData.stringBuilder.charAt(x) != '+' && calcData.stringBuilder.charAt(x) != '-'){
+        while(x>=0 && calcData.stringBuilder.charAt(x) != '+' && calcData.stringBuilder.charAt(x) != '-' && calcData.stringBuilder.charAt(x) != '('){
             x--;
         }
 
@@ -49,6 +49,79 @@ public class CalcController{
         }while(x< calcData.stringBuilder.length() && calcData.stringBuilder.charAt(x)!='+' && calcData.stringBuilder.charAt(x) != '-');
 
     }
+
+    public static void createBracket(CalcData calcData, StringBuilder sb, int actualBracket) {
+        actualBracket = 0;
+        int x = 0;
+        double result = 0;
+
+        do{
+            if(calcData.stringBuilder.charAt(x) == '(') actualBracket++;
+            x++;
+        }while(actualBracket != calcData.getLeftBracket());
+
+        int from = x;
+
+        do{
+            sb.append(calcData.stringBuilder.charAt(x));
+            x++;
+        }while (calcData.stringBuilder.charAt(x) != ')');
+
+        checkAction(calcData, sb);
+
+        if(calcData.isMultiply()){
+            do{
+                createMultiply(calcData, calcData.multiply);
+                checkStartEnd(calcData, calcData.multiply, from);
+
+
+                createArray(calcData, calcData.multiply);
+                result = getResult(calcData);
+                saveResult(calcData, result);
+
+                calcData.multiply.delete(0, 1);
+
+                checkStartEnd(calcData, calcData.multiply, sb);
+                saveResult(calcData, result, sb);
+
+                deleteBuilder(calcData.multiply);
+                checkAction(calcData, sb);
+            }while(calcData.isMultiply());
+        }
+        /*
+        createArray(calcData, sb);
+        result = getResult(calcData);
+        saveResult(calcData, result);
+
+         */
+
+    }
+
+    public static void createSpecialBracket(CalcData calcData) {
+
+    }
+
+    public static void checkStartEnd(CalcData calcData, StringBuilder sb, int from){
+
+        calcData.start = calcData.stringBuilder.indexOf(sb.toString(), from);
+        calcData.end = calcData.start + sb.length();
+
+    }
+
+    public static void checkStartEnd(CalcData calcData, StringBuilder multiply, StringBuilder bracket){
+
+        calcData.start = bracket.indexOf(multiply.toString());
+        calcData.end = calcData.start + multiply.length();
+
+    }
+
+    public static void checkStartEnd(CalcData calcData, StringBuilder sb){
+
+        calcData.start = calcData.stringBuilder.indexOf(sb.toString());
+        calcData.end = calcData.start + sb.length();
+
+    }
+
 
     public static void createArray(CalcData calcData, StringBuilder sb){
         calcData.helper = "";
@@ -68,18 +141,40 @@ public class CalcController{
                 x--;
             }
         }
+    }
 
+    public static void deleteBuilder(StringBuilder sb){
         sb.delete(0, sb.length());
     }
 
     public static void saveResult(CalcData calcData, double result){
+        System.out.println("t");
         if(result >= 0){
             calcData.stringBuilder.replace(calcData.start, calcData.end, String.valueOf(result));
         }else{
             if(calcData.start == 0){
                 calcData.stringBuilder.replace(calcData.start, calcData.end, String.valueOf(result));
             }else{
+                if(calcData.stringBuilder.charAt(calcData.start-1)=='-'){
+                    result = result - 2*result;
+                    calcData.stringBuilder.replace(calcData.start - 1, calcData.end, String.valueOf(result));
+                }else if(calcData.stringBuilder.charAt(calcData.start-1)=='+'){
+                    calcData.stringBuilder.replace(calcData.start - 1, calcData.end, String.valueOf(result));
+                }else if(calcData.stringBuilder.charAt(calcData.start-1) == '*' || calcData.stringBuilder.charAt(calcData.start-1) == '/'){
+                    calcData.stringBuilder.replace(calcData.start, calcData.end, "(" + result + ")");
+                }
+            }
+        }
+    }
 
+    public static void saveResult(CalcData calcData, double result, StringBuilder sb){
+        if(result >= 0){
+            sb.replace(calcData.start, calcData.end, String.valueOf(result));
+        }else{
+            if(calcData.start == 0){
+                sb.replace(calcData.start, calcData.end, String.valueOf(result));
+            }else{
+                sb.replace(calcData.start, calcData.end, String.valueOf(result));
             }
         }
     }
@@ -87,6 +182,7 @@ public class CalcController{
     public static void printResult(CalcData calcData){
         System.out.println(calcData.toString() + "\n");
     }
+    //^
 
     public static void createActionMultiply(CalcData calcData, int start, int end){
         int x=0;
@@ -120,20 +216,6 @@ public class CalcController{
 
         System.out.println("String special helper: " + calcData.stringSpecialHelper);
         createMultiplyAction(calcData, start, end);
-    }
-
-    public static void checkStartEnd(CalcData calcData, StringBuilder sb){
-        int start;
-        int end;
-
-        calcData.start = 0;
-        calcData.end = 0;
-
-        start = calcData.stringBuilder.indexOf(sb.toString());
-        end = start + sb.length();
-
-        calcData.start = start;
-        calcData.end = end;
     }
 
     public static void createMultiplyAction(CalcData calcData, int start, int end) {
@@ -212,6 +294,7 @@ public class CalcController{
         }
     }
 
+    //ważne V
     public static void checkAction(CalcData calcData){
         CalcData.howSpecialBracket = 0;
         calcData.setLeftBracket(0);
@@ -239,6 +322,10 @@ public class CalcController{
                 calcData.setSpecialBracket(true);
                 CalcData.howSpecialBracket++;
             }
+        }
+
+        for(int x=0; x<calcData.stringBuilder.length(); x++){
+            if(calcData.stringBuilder.charAt(x)=='/'||calcData.stringBuilder.charAt(x)=='*')calcData.setMultiply(true);
             if(calcData.stringBuilder.charAt(x)=='('){
                 calcData.setLeftBracket(calcData.getLeftBracket()+1);
                 calcData.setBracket(true);
@@ -247,10 +334,7 @@ public class CalcController{
                 calcData.setRightBracket(calcData.getRightBracket()+1);
                 calcData.setBracket(true);
             }
-        }
 
-        for(int x=0; x<calcData.stringBuilder.length(); x++){
-            if(calcData.stringBuilder.charAt(x)=='/'||calcData.stringBuilder.charAt(x)=='*')calcData.setMultiply(true);
         }
 
         if(calcData.getLeftBracket()!=0){
@@ -258,6 +342,30 @@ public class CalcController{
         }
 
         if(!calcData.isBracket()&&!calcData.isMultiply()&&!calcData.isSpecialBracket())calcData.setNormal(true);
+    }
+
+    public static void checkAction(CalcData calcData, StringBuilder sb){
+        calcData.setLeftBracket(0);
+        calcData.setRightBracket(0);
+
+        calcData.setMultiply(false);
+        calcData.setBracket(false);
+        calcData.setSpecialBracket(false);
+        calcData.setNormal(false);
+
+        for(int x=0; x<sb.length(); x++){
+            if(sb.charAt(x)=='/'||sb.charAt(x)=='*')calcData.setMultiply(true);
+            if(sb.charAt(x)=='('){
+                calcData.setLeftBracket(calcData.getLeftBracket()+1);
+                calcData.setBracket(true);
+            }
+            if(sb.charAt(x)==')'){
+                calcData.setRightBracket(calcData.getRightBracket()+1);
+                calcData.setBracket(true);
+            }
+
+        }
+
     }
 
     public static double getResult(CalcData calcData) {

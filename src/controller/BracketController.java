@@ -7,54 +7,33 @@ public class BracketController implements CalcOperator {
     //3*(-2*3+3)
     CalcData calcData;
     int actualBracket;
-    int start, end;
 
+    //(3+2)-(3*3-4)
     @Override
     public void createAction(CalcData calcData) {
         this.calcData = calcData;
         do {
-            checkBracket();
+            CalcController.createBracket(calcData, calcData.bracket, actualBracket);
+            CalcController.checkStartEnd(calcData, calcData.bracket);
+
+            CalcController.createArray(calcData, calcData.bracket);
+            double result = CalcController.getResult(calcData);
+
+            calcData.start = calcData.start - 1;
+            calcData.end = calcData.end + 1;
+
+            CalcController.saveResult(calcData, result);
             CalcController.checkAction(calcData);
+
+            CalcController.deleteBuilder(calcData.bracket);
+            if(calcData.isSpecialBracket())CalcController.createSpecialBracket(calcData);
+
         } while (calcData.isBracket());
     }
 
-    private void checkBracket() {
-
-        double result = 0;
-        actualBracket = 0;
-
-        int x = 0;
-
-        do{
-            howBracket(x);
-            x++;
-        }while(actualBracket != calcData.getLeftBracket());
-
-        start = x;
-
-        do{
-            calcData.stringHelper.append(calcData.stringBuilder.charAt(x));
-            x++;
-        }while (calcData.stringBuilder.charAt(x) != ')');
-        end = x + 1;
-
-        CalcController.checkStringHelper(calcData);
-        if(calcData.isMultiply()){
-            do{
-                bracketMultiplyAction();
-                start++;
-            }while(calcData.isMultiply());
-            CalcController.createArrayStringHelper(calcData);
-            result = CalcController.getResult(calcData);
-        }else{
-            CalcController.createArrayStringHelper(calcData);
-            result = CalcController.getResult(calcData);
-        }
-
-        repairAction(result);
-    }
     //2+(2*2-5) !!
     private void bracketMultiplyAction() {
+        /*
         int x=0;
         do{
             x++;
@@ -75,16 +54,13 @@ public class BracketController implements CalcOperator {
 
         CalcController.createMultiplyAction(calcData, start, end);
 
-    }
+         */
 
-    private void howBracket(int x) {
-        if (calcData.stringBuilder.charAt(x) == '(') actualBracket++;
     }
-
 
     @Override
     public void repairAction(double result) {
-
+        /*
         if(result>0){
             calcData.stringBuilder.replace(start-1, end, String.valueOf(result));
         }else{
@@ -97,6 +73,8 @@ public class BracketController implements CalcOperator {
         }
 
         CalcController.checkAction(calcData);
-
+ */
     }
+
+
 }

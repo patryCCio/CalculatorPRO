@@ -14,6 +14,7 @@ public class NormalController implements CalcOperator{
 
         CalcController.checkStartEnd(calcData, calcData.normal);
         CalcController.createArray(calcData, calcData.normal);
+        CalcController.deleteBuilder(calcData.normal);
         calcData.result = CalcController.getResult(calcData);
 
         calcData.stringBuilder.delete(calcData.start, calcData.end);
