@@ -4,62 +4,85 @@ import data.CalcData;
 
 public class CalcController{
 
-    CalcData calcData;
 
     public void doAction(CalcData calcData) {
         calcData.helper = "";
-        this.calcData = calcData;
         checkAction(calcData);
         do{
             if(calcData.isSpecialBracket()){
                 SpecialBracketController specialBracketController = new SpecialBracketController();
-                specialBracketController.createAction(this.calcData);
+                specialBracketController.createAction(calcData);
             }else if(calcData.isBracket()){
                 BracketController bracketController = new BracketController();
-                bracketController.createAction(this.calcData);
+                bracketController.createAction(calcData);
             }else if(calcData.isMultiply()){
                 MultiplyController multiplyController = new MultiplyController();
-                multiplyController.createAction(this.calcData);
+                multiplyController.createAction(calcData);
             }else if(calcData.isNormal()){
                 NormalController normalController = new NormalController();
-                normalController.createAction(this.calcData);
+                normalController.createAction(calcData);
             }
-        }while(calcData.isSpecialBracket() || calcData.isBracket() || calcData.isMultiply());
-        System.out.println("Przeszedłem dalej!");
+        }while(!calcData.isNormal());
 
-        createArray();
+        printResult(calcData);
     }
 
-    public static void createMultiply(CalcData calcData, StringBuilder stringBuilder){
+    public static void createMultiply(CalcData calcData, StringBuilder sb){
+        int x=0;
 
-    }
-
-    public static void createNormal(CalcData calcData, StringBuilder stringBuilder){
-
-    }
-
-    private void createArray() {
-        if(calcData.stringBuilder.charAt(0)!='-' && calcData.stringBuilder.charAt(0) != '+'){
-            calcData.stringBuilder.replace(0, 0, "+");
+        while(calcData.stringBuilder.charAt(x)!='*' && calcData.stringBuilder.charAt(x)!='/'){
+            x++;
         }
 
-        for(int x=0; x<calcData.stringBuilder.length(); x++){
-            if(calcData.stringBuilder.charAt(x) == '+' || calcData.stringBuilder.charAt(x) == '-'){
-                calcData.characters.add(calcData.stringBuilder.charAt(x));
+        while(x>=0 && calcData.stringBuilder.charAt(x) != '+' && calcData.stringBuilder.charAt(x) != '-'){
+            x--;
+        }
+
+        if(x!=0 && calcData.stringBuilder.charAt(0)!='-')x++;
+
+        do{
+            sb.append(calcData.stringBuilder.charAt(x));
+            x++;
+        }while(x< calcData.stringBuilder.length() && calcData.stringBuilder.charAt(x)!='+' && calcData.stringBuilder.charAt(x) != '-');
+
+    }
+
+    public static void createArray(CalcData calcData, StringBuilder sb){
+        calcData.helper = "";
+
+        if(sb.charAt(0)!='-' && sb.charAt(0) != '+') sb.replace(0, 0, "+");
+
+        for(int x=0; x<sb.length(); x++){
+            if(sb.charAt(x) == '+' || sb.charAt(x) == '-' || sb.charAt(x) == '/' || sb.charAt(x) == '*'){
+                calcData.characters.add(sb.charAt(x));
             }else{
                 do{
-                    calcData.helper = calcData.helper + calcData.stringBuilder.charAt(x);
+                    calcData.helper = calcData.helper + sb.charAt(x);
                     x++;
-                }while(x < calcData.stringBuilder.length() && calcData.stringBuilder.charAt(x) != '-' && calcData.stringBuilder.charAt(x) != '+');
-            calcData.actions.add(Double.valueOf(calcData.helper));
-            calcData.helper = "";
-            x--;
+                }while(x < sb.length() && sb.charAt(x) != '-' && sb.charAt(x) != '+' && sb.charAt(x) != '*' && sb.charAt(x) != '/');
+                calcData.actions.add(Double.valueOf(calcData.helper));
+                calcData.helper = "";
+                x--;
             }
         }
 
-        calcData.stringBuilder.delete(0, calcData.stringBuilder.length());
-        calcData.result = getResult(calcData);
-        System.out.println(calcData.toString());
+        sb.delete(0, sb.length());
+    }
+
+    public static void saveResult(CalcData calcData, double result){
+        if(result >= 0){
+            calcData.stringBuilder.replace(calcData.start, calcData.end, String.valueOf(result));
+        }else{
+            if(calcData.start == 0){
+                calcData.stringBuilder.replace(calcData.start, calcData.end, String.valueOf(result));
+            }else{
+
+            }
+        }
+    }
+
+    public static void printResult(CalcData calcData){
+        System.out.println(calcData.toString() + "\n");
     }
 
     public static void createActionMultiply(CalcData calcData, int start, int end){
@@ -96,7 +119,10 @@ public class CalcController{
         createMultiplyAction(calcData, start, end);
     }
 
-    public static void checkStartEnd(CalcData calcData, StringBuilder sb,int start, int end){
+    public static void checkStartEnd(CalcData calcData, StringBuilder sb){
+        int start;
+        int end;
+
         start = calcData.stringBuilder.indexOf(sb.toString());
         end = start + sb.length();
 
