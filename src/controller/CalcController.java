@@ -60,7 +60,7 @@ public class CalcController{
     public static void createMultiply(StringBuilder sb, StringBuilder multiply){
         int x=0;
 
-        while(x < sb.length() && sb.charAt(x)!='+' && sb.charAt(x)!='-'){
+        while(x < sb.length() && sb.charAt(x)!='*' && sb.charAt(x)!='/'){
             x++;
         }
 
@@ -134,7 +134,7 @@ public class CalcController{
 
         if(calcData.isMultiply()){
             do{
-                createMultiply(sb, calcData.multiply);
+                createMultiplySpecial(sb, calcData.multiply);
                 checkStartEnd(calcData, calcData.multiply);
 
 
@@ -151,6 +151,9 @@ public class CalcController{
 
             createArray(calcData, sb);
         }
+    }
+
+    private static void createMultiplySpecial(StringBuilder sb, StringBuilder multiply) {
     }
 
     public static void checkStartEnd(CalcData calcData, StringBuilder sb, int from){
