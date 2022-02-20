@@ -11,57 +11,35 @@ public class SpecialBracketController implements CalcOperator {
 
     @Override
     public void createAction(CalcData calcData) {
-        this.calcData = calcData;
         do {
-            checkSpecialBracket();
+            int where = CalcController.checkWhereSpecial(calcData, calcData.stringBuilder);
+            CalcController.createSpecialBracket(calcData, calcData.specialBracket, where);
+            CalcController.checkStartEnd(calcData, calcData.specialBracket);
+            double result = CalcController.getResult(calcData);
+            reverseAction(calcData, calcData.specialBracket, result);
+
+            calcData.start = calcData.start - 1;
+            calcData.end = calcData.end + 1;
+
+            CalcController.saveResult(calcData, result);
             CalcController.checkAction(calcData);
-        } while (calcData.isSpecialBracket());
+
+            CalcController.deleteBuilder(calcData.bracket);
+
+        } while (calcData.isBracket());
     }
 
 
     //2*(-3+2/3) 2*(-3+23+2) 2*(-3+23+2)+(-3+23-5)
-    private void checkSpecialBracket() {
-        result = 0;
-        actualSpecialBracket = 0;
-        int x = 2;
-        do {
-            specialBracket(x);
-            x++;
-        } while (actualSpecialBracket != CalcData.howSpecialBracket);
-        x--;
-        start = x-1;
-        do{
-            calcData.stringHelper.append(calcData.stringBuilder.charAt(x));
-            x++;
-        }while(calcData.stringBuilder.charAt(x) != ')');
-        end = x+1;
 
-        CalcController.checkStringHelper(calcData);
-        if(calcData.isMultiply()){
-            do{
-                CalcController.createActionMultiply(calcData, start, end);
-            }while(calcData.isMultiply());
-            CalcController.createArrayStringHelper(calcData);
-            result = CalcController.getResult(calcData);
-        }else{
-            CalcController.createArrayStringHelper(calcData);
-            result = CalcController.getResult(calcData);
+    private void reverseAction(CalcData calcData, StringBuilder sb, double result){
+        sb.append(calcData.stringBuilder.charAt(calcData.start-2));
+
+        calcData.start--;
+
+        while(calcData.start >= 0 && calcData.stringBuilder.charAt(calcData.start) != '(' && calcData.stringBuilder.charAt(calcData.start) != '-' && calcData.stringBuilder.charAt(calcData.start) != '+'){
+
         }
-
-        if(result>0){
-            calcData.stringBuilder.replace(start, end, String.valueOf(result));
-        }else{
-            if(calcData.stringBuilder.charAt(start-1)=='-'){
-                result = result - 2*result;
-                calcData.stringBuilder.replace(start-1, end, "+" + result);
-            }else if(calcData.stringBuilder.charAt(start-1)=='+'){
-                calcData.stringBuilder.replace(start-1, end, String.valueOf(result));
-            }else{
-                createActionMultiply(result, start, end);
-            }
-        }
-
-        CalcController.checkAction(calcData);
 
     }
 

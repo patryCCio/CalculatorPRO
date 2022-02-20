@@ -21,16 +21,5 @@ public class MultiplyController implements CalcOperator{
 
     @Override
     public void repairAction(double result) {
-       /* if(start==0){
-            calcData.stringBuilder.replace(start, end, String.valueOf(result));
-        }else{
-            calcData.stringBuilder.replace(start, end, String.valueOf(result));
-        }
-
-        */
-    }
-
-    public static void specialBracketMultiply(CalcData calcData){
-
     }
 }

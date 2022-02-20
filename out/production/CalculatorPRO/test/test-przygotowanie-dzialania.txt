@@ -7,3 +7,14 @@
 ()[]3 = 0*0*3 -> correct
 ()[]+3 = 0*0+3 -> correct
 3..2 = 3..2 -> uncorrect, oczekiwane: IOException | Naprawione
+
+
+// test dzialan
+1+(20-(6-(4+9))) = 28 -> correct
+-1/3+11/6*4/4-5/3 -> uncorrect | Naprawione
+(3+2)-(3*3-4) = 0 -> correct
+2+(2*2-5) = 1 -> correct
+(3*2-2)-(3*3/3) = 1 -> correct
+
+//Special bracket
+3*(-3*2)
