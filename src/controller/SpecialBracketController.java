@@ -24,9 +24,6 @@ public class SpecialBracketController implements CalcOperator {
         } while (calcData.isSpecialBracket());
     }
 
-
-    //2*(-3+2/3) 2*(-3+23+2) 2*(-3+23+2)+(-3+23-5)
-
     private void reverseAction(CalcData calcData, StringBuilder sb){
 
         calcData.start = calcData.start - 2;
@@ -49,12 +46,4 @@ public class SpecialBracketController implements CalcOperator {
         calcData.end++;
     }
 
-    //3+3*(-3*2)
-    //3*(-2*3+3) nie dziala
-
-
-    @Override
-    public void repairAction(double result) {
-
-    }
 }

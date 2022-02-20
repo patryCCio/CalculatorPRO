@@ -7,5 +7,4 @@ public interface CalcOperator {
 
     void createAction(CalcData calcData);
 
-    void repairAction(double result);
 }

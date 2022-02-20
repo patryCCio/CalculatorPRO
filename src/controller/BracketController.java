@@ -4,15 +4,10 @@ import data.CalcData;
 
 public class BracketController implements CalcOperator {
 
-    //3*(-2*3+3) -> bad
-    CalcData calcData;
-    int actualBracket;
-
     @Override
     public void createAction(CalcData calcData) {
-        this.calcData = calcData;
         do {
-            CalcController.createBracket(calcData, calcData.bracket, actualBracket);
+            CalcController.createBracket(calcData, calcData.bracket);
             CalcController.checkStartEnd(calcData, calcData.bracket);
 
             CalcController.createArray(calcData, calcData.bracket);
@@ -32,11 +27,5 @@ public class BracketController implements CalcOperator {
 
         } while (calcData.isBracket());
     }
-
-    @Override
-    public void repairAction(double result) {
-
-    }
-
 
 }

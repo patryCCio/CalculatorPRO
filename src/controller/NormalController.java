@@ -21,8 +21,4 @@ public class NormalController implements CalcOperator{
 
     }
 
-    @Override
-    public void repairAction(double result) {
-
-    }
 }

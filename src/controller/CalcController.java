@@ -79,8 +79,8 @@ public class CalcController{
 
     }
 
-    public static void createBracket(CalcData calcData, StringBuilder sb, int actualBracket) {
-        actualBracket = 0;
+    public static void createBracket(CalcData calcData, StringBuilder sb) {
+        int actualBracket = 0;
         int x = 0;
         double result = 0;
 

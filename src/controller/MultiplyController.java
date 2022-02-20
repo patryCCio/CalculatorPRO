@@ -18,8 +18,4 @@ public class MultiplyController implements CalcOperator{
         }while(calcData.isMultiply());
     }
 
-
-    @Override
-    public void repairAction(double result) {
-    }
 }
