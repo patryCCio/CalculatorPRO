@@ -17,4 +17,4 @@
 (3*2-2)-(3*3/3) = 1 -> correct
 
 //Special bracket
-3*(-3*2)
+3*(-3*2) = -18 -> correct
