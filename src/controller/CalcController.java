@@ -178,10 +178,13 @@ public class CalcController{
 
         if(sb.charAt(0)!='-')x++;
 
+
         do{
             multiply.append(sb.charAt(x));
             x++;
         }while(x< sb.length() && sb.charAt(x)!='+' && sb.charAt(x) != '-');
+
+        if(multiply.charAt(0)=='+')multiply.delete(0, 1);
     }
 
     public static void checkStartEnd(CalcData calcData, StringBuilder sb, int from){
