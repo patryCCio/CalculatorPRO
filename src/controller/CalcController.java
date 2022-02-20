@@ -8,6 +8,7 @@ public class CalcController{
         int result = 0;
         for(int x = 2; x<stringBuilder.length(); x++){
             if(stringBuilder.charAt(x)=='-' && stringBuilder.charAt(x-1)=='(' && stringBuilder.charAt(x-2)=='*') result = x;
+            if(stringBuilder.charAt(x)=='-' && stringBuilder.charAt(x-1)=='(' && stringBuilder.charAt(x-2)=='/') result = x;
         }
         return result;
     }
@@ -122,6 +123,7 @@ public class CalcController{
 
     public static void createSpecialBracket(CalcData calcData, StringBuilder sb, int where) {
 
+        calcData.setReverse(false);
         int x = where;
         double result = 0;
 
@@ -141,19 +143,45 @@ public class CalcController{
                 createArray(calcData, calcData.multiply);
                 result = getResult(calcData);
                 saveResult(calcData, result);
-
+                if(calcData.multiply.charAt(0)=='+')calcData.multiply.delete(0, 0);
                 checkStartEnd(calcData, calcData.multiply, sb);
-                saveResult(calcData, result, sb);
+                saveResultSpecial(calcData, result, sb);
 
                 deleteBuilder(calcData.multiply);
                 checkAction(calcData, sb);
             }while(calcData.isMultiply());
-
-            createArray(calcData, sb);
+        }
+        createArray(calcData, sb);
+        result = CalcController.getResult(calcData);
+        checkStartEnd(calcData, sb);
+        saveResult(calcData, result);
+        checkAction(calcData);
+        sb.replace(0, sb.length(), String.valueOf(result));
+        if(result<0)calcData.setReverse(true);
+        else{
+            calcData.stringBuilder.replace(calcData.start-1, calcData.end+1, String.valueOf(result));
         }
     }
 
     private static void createMultiplySpecial(StringBuilder sb, StringBuilder multiply) {
+        int x=0;
+
+        while(x < sb.length() && sb.charAt(x)!='*' && sb.charAt(x)!='/'){
+            x++;
+        }
+
+        x--;
+
+        while(x>=0 && sb.charAt(x) != '+' && sb.charAt(x) != '-' && sb.charAt(x) != '('){
+            x--;
+        }
+
+        if(sb.charAt(0)!='-')x++;
+
+        do{
+            multiply.append(sb.charAt(x));
+            x++;
+        }while(x< sb.length() && sb.charAt(x)!='+' && sb.charAt(x) != '-');
     }
 
     public static void checkStartEnd(CalcData calcData, StringBuilder sb, int from){
@@ -228,6 +256,18 @@ public class CalcController{
     public static void saveResult(CalcData calcData, double result, StringBuilder sb){
         if(result >= 0){
             sb.replace(calcData.start, calcData.end, String.valueOf(result));
+        }else{
+            if(calcData.start == 0){
+                sb.replace(calcData.start, calcData.end, String.valueOf(result));
+            }else{
+                sb.replace(calcData.start, calcData.end, String.valueOf(result));
+            }
+        }
+    }
+
+    public static void saveResultSpecial(CalcData calcData, double result, StringBuilder sb){
+        if(result >= 0){
+            sb.replace(calcData.start+1, calcData.end, String.valueOf(result));
         }else{
             if(calcData.start == 0){
                 sb.replace(calcData.start, calcData.end, String.valueOf(result));

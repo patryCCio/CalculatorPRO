@@ -13,8 +13,6 @@ public class CalcData {
     public StringBuilder specialBracket = new StringBuilder();
     public StringBuilder normal = new StringBuilder();
 
-    public StringBuilder stringHelper = new StringBuilder();
-    public StringBuilder stringSpecialHelper = new StringBuilder();
 
     public int start;
     public int end;
@@ -23,6 +21,7 @@ public class CalcData {
     private boolean isBracket;
     private boolean isSpecialBracket;
     private boolean isNormal;
+    private boolean isReverse;
 
     public static int howSpecialBracket = 0;
 
@@ -32,6 +31,14 @@ public class CalcData {
     private int rightBracket;
 
     public String helper;
+
+    public boolean isReverse() {
+        return isReverse;
+    }
+
+    public void setReverse(boolean reverse) {
+        isReverse = reverse;
+    }
 
     public boolean isNormal() {
         return isNormal;
