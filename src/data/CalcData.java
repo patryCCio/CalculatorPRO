@@ -24,6 +24,25 @@ public class CalcData {
     private boolean isSpecialBracket;
     private boolean isNormal;
     private boolean isReverse;
+    private boolean isReverseDivide;
+
+    public boolean isReverseDivide() {
+        return isReverseDivide;
+    }
+
+    public void setReverseDivide(boolean reverseDivide) {
+        isReverseDivide = reverseDivide;
+    }
+
+    public boolean isOtherSpecial() {
+        return isOtherSpecial;
+    }
+
+    public void setOtherSpecial(boolean otherSpecial) {
+        isOtherSpecial = otherSpecial;
+    }
+
+    private boolean isOtherSpecial;
 
     public static int howSpecialBracket = 0;
 

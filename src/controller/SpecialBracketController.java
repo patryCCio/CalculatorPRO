@@ -8,9 +8,24 @@ public class SpecialBracketController implements CalcOperator {
     @Override
     public void createAction(CalcData calcData) {
         do {
+            calcData.setReverseDivide(false);
             int where = CalcController.checkWhereSpecial(calcData, calcData.stringBuilder);
+            CalcController.checkIsBracket(calcData, where);
+            if(calcData.isOtherSpecial()){
+                CalcController.createOtherSpecial(calcData, calcData.specialBracket, where);
+                CalcController.checkStartEnd(calcData, calcData.specialBracket);
+                CalcController.createArray(calcData, calcData.specialBracket);
+                double result = CalcController.getResult(calcData);
+                calcData.start = calcData.start - 1;
+                calcData.end = calcData.end + 1;
+                CalcController.saveResult(calcData, result);
+                CalcController.checkAction(calcData);
+                CalcController.deleteBuilder(calcData.specialBracket);
+                where = CalcController.checkWhereSpecial(calcData, calcData.stringBuilder);
+            }
+
             CalcController.createSpecialBracket(calcData, calcData.specialBracket, where);
-            CalcController.checkStartEnd(calcData, calcData.specialBracket);
+            CalcController.checkStartEnd(calcData, calcData.specialBracket, where);
 
             if(calcData.isReverse()){
                 reverseAction(calcData, calcData.specialBracket);
@@ -22,6 +37,7 @@ public class SpecialBracketController implements CalcOperator {
                 CalcController.saveResult(calcData, result);
                 CalcController.checkAction(calcData);
             }
+
             CalcController.deleteBuilder(calcData.specialBracket);
             CalcController.checkAction(calcData);
 
@@ -37,7 +53,6 @@ public class SpecialBracketController implements CalcOperator {
         while(calcData.start >= 0 && calcData.stringBuilder.charAt(calcData.start) != '(' && calcData.stringBuilder.charAt(calcData.start) != '-' && calcData.stringBuilder.charAt(calcData.start) != '+'){
             calcData.start--;
         }
-
         calcData.start++;
         int x = calcData.start;
 

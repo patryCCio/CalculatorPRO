@@ -8,6 +8,8 @@ public class NormalController implements CalcOperator{
     @Override
     public void createAction(CalcData calcData) {
 
+        if(calcData.stringBuilder.charAt(0)=='+')calcData.stringBuilder.delete(0, 1);
+
         for(int x=0; x<calcData.stringBuilder.length(); x++){
             calcData.normal.append(calcData.stringBuilder.charAt(x));
         }

@@ -17,10 +17,22 @@
 (3*2-2)-(3*3/3) = 1 -> correct!
 
 
-//Special bracket ..*(-..)
+//Special bracket ..*(-..) -..*(-..)
 3*(-3*2) = -18 -> correct!
 3*(-2*3+3) = -9 -> correct!
 3+3*(-3*2) = -15 -> correct!
 2*(-3+2/2) = -4 -> correct!
 2*(-3+23+2) = 44 -> correct!
-2*(-3+23+2)+(-3+23-5) = 59 correct!
+2*(-3+23+2)+(-3+23-5) = 59 -> correct!
+3*(6-7) = -3 -> correct!
+-3*(-3) = 9 -> correct!
+-3*(-3*(-3)) = -27 -> correct!
+-3*(-3*(-3/3)) = -9 -> correct!
+-3*(-3+2*(-3/3)) = 15 -> correct!
+(-3*2)*(6-7) = 6 -> correct!
+3*(-3*2)+3*(-2*3+3)+3+3*(-3*2) = -42
+
+// Do zrobienia
+- obsluga działan typu: -3*(result<0) lub (..)*(result<0)
+
+
