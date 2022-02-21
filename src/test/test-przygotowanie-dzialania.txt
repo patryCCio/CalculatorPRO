@@ -15,11 +15,16 @@
 (3+2)-(3*3-4) = 0 -> correct!
 2+(2*2-5) = 1 -> correct!
 (3*2-2)-(3*3/3) = 1 -> correct!
-2*(-3+23+2)+(-3+23-5) = 59 ->
 
-//Special bracket
+
+//Special bracket ..*(-..)
 3*(-3*2) = -18 -> correct!
 3*(-2*3+3) = -9 -> correct!
 3+3*(-3*2) = -15 -> correct!
 2*(-3+2/2) = -4 -> correct!
 2*(-3+23+2) = 44 -> correct!
+2*(-3+23+2)+(-3+23-5) = 59 correct!
+
+
+// Do zrobienia!
+- obsługa specialBracket gdy mamy działanie np: -3*(result<0) lub (...)*(result<0)

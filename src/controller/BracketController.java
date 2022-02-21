@@ -21,8 +21,8 @@ public class BracketController implements CalcOperator {
 
             CalcController.deleteBuilder(calcData.bracket);
             if(calcData.isSpecialBracket()){
-                int where = CalcController.checkWhereSpecial(calcData, calcData.stringBuilder);
-                CalcController.createSpecialBracket(calcData, calcData.stringBuilder, where);
+                SpecialBracketController specialBracketController = new SpecialBracketController();
+                specialBracketController.createAction(calcData);
             }
 
         } while (calcData.isBracket());

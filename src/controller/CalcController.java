@@ -9,6 +9,8 @@ public class CalcController{
         for(int x = 2; x<stringBuilder.length(); x++){
             if(stringBuilder.charAt(x)=='-' && stringBuilder.charAt(x-1)=='(' && stringBuilder.charAt(x-2)=='*') result = x;
             if(stringBuilder.charAt(x)=='-' && stringBuilder.charAt(x-1)=='(' && stringBuilder.charAt(x-2)=='/') result = x;
+            if(stringBuilder.charAt(x)=='-' && stringBuilder.charAt(x-1)=='(' && stringBuilder.charAt(x-2)=='-') result = x;
+            if(stringBuilder.charAt(x)=='-' && stringBuilder.charAt(x-1)=='(' && stringBuilder.charAt(x-2)=='+') result = x;
         }
         return result;
     }
@@ -155,12 +157,15 @@ public class CalcController{
         result = CalcController.getResult(calcData);
         checkStartEnd(calcData, sb);
         saveResult(calcData, result);
-        checkAction(calcData);
         sb.replace(0, sb.length(), String.valueOf(result));
+
         if(result<0)calcData.setReverse(true);
         else{
+            checkStartEnd(calcData, sb);
             calcData.stringBuilder.replace(calcData.start-1, calcData.end+1, String.valueOf(result));
         }
+
+        checkAction(calcData);
     }
 
     private static void createMultiplySpecial(StringBuilder sb, StringBuilder multiply) {
