@@ -16,7 +16,7 @@ public class CalcLogic {
         calcData.helper = bufferedReader.readLine();
         calcData.stringBuilder.append(calcData.helper);
 
-        if(checkCorrect())throw new IOException("Niewłaściwie zakończone lub rozpoczęte działanie!");
+        if(checkCorrect())throw new IOException("Niewłaściwie zakończone lub rozpoczęte działanie!"); //sprawdza początek i koniec działania
         for (int x = 0; x < calcData.stringBuilder.length(); x++) {
             checkBrackets(x);
             checkCorrectAction(x);

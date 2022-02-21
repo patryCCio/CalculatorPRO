@@ -4,6 +4,7 @@ import data.CalcData;
 
 public class MultiplyController implements CalcOperator{
 
+    //operacja mnożenia
     @Override
     public void createAction(CalcData calcData) {
         do{

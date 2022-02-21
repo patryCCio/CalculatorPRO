@@ -4,6 +4,8 @@ import data.CalcData;
 
 public class CalcController{
 
+
+    //sprawdza gdzie jest specjalna część działania: *(-
     public static int checkWhereSpecial(CalcData calcData, StringBuilder stringBuilder) {
         int result = 0;
         for(int x = 2; x<stringBuilder.length(); x++){
@@ -15,6 +17,7 @@ public class CalcController{
         return result;
     }
 
+    //zarządza całym działaniem
     public void doAction(CalcData calcData) {
         calcData.helper = "";
         checkAction(calcData);
@@ -40,6 +43,7 @@ public class CalcController{
         printResult(calcData);
     }
 
+    //utwórz i przypisz działanie mnożenia
     public static void createMultiply(CalcData calcData, StringBuilder sb){
         int x=0;
 
@@ -60,6 +64,7 @@ public class CalcController{
 
     }
 
+    //utwórz i przypisz działanie mnożenia ale dla konkretnego stringbuildera (gdyż chcemy wykonywać jakieś działanie z nawiasów)
     public static void createMultiply(StringBuilder sb, StringBuilder multiply){
         int x=0;
 
@@ -82,6 +87,7 @@ public class CalcController{
 
     }
 
+    //utwórz i przypisz do odpowiedniego stringbuildera działanie zawarte w nawiasie
     public static void createBracket(CalcData calcData, StringBuilder sb) {
         int actualBracket = 0;
         int x = 0;
@@ -123,6 +129,7 @@ public class CalcController{
 
     }
 
+    //utwórz i przypisz do odpowiedniego stringbuildera działanie specjalne zawarte w nawiasie
     public static void createSpecialBracket(CalcData calcData, StringBuilder sb, int where) {
 
         calcData.setReverse(false);
@@ -168,6 +175,7 @@ public class CalcController{
         checkAction(calcData);
     }
 
+    //utwórz i przypisz działanie mnożenia dla konkretnego stringbuildera
     private static void createMultiplySpecial(StringBuilder sb, StringBuilder multiply) {
         int x=0;
 
@@ -192,6 +200,7 @@ public class CalcController{
         if(multiply.charAt(0)=='+')multiply.delete(0, 1);
     }
 
+    //dodatkowe zabezpieczenie, aby nie wyszukało nam takiego samego działania które występuje wcześniej!
     public static void checkStartEnd(CalcData calcData, StringBuilder sb, int from){
 
         calcData.start = calcData.stringBuilder.indexOf(sb.toString(), from);
@@ -199,6 +208,7 @@ public class CalcController{
 
     }
 
+    //sprawdź gdzie jest dany urywek działania w konkretnym stringbuilderze
     public static void checkStartEnd(CalcData calcData, StringBuilder multiply, StringBuilder bracket){
 
         calcData.start = bracket.indexOf(multiply.toString());
@@ -206,6 +216,7 @@ public class CalcController{
 
     }
 
+    //sprawdź gdzie jest dany urywek działania w głównym stringbuilderze
     public static void checkStartEnd(CalcData calcData, StringBuilder sb){
 
         calcData.start = calcData.stringBuilder.indexOf(sb.toString());
@@ -213,6 +224,7 @@ public class CalcController{
 
     }
 
+    //utwórz 2 arraylisty, żeby mógł wykonać działanie
     public static void createArray(CalcData calcData, StringBuilder sb){
         calcData.helper = "";
 
@@ -233,10 +245,12 @@ public class CalcController{
         }
     }
 
+    //wyczyść konkretnego stringbuildera
     public static void deleteBuilder(StringBuilder sb){
         sb.delete(0, sb.length());
     }
 
+    //zapisz rezultat do stringbuildera
     public static void saveResult(CalcData calcData, double result){
         //if(calcData.start > 0&&calcData.stringBuilder.charAt(calcData.start-1)!='-'&&calcData.stringBuilder.charAt(calcData.start-1)!='+'&&calcData.stringBuilder.charAt(calcData.start-1)!='/'&&calcData.stringBuilder.charAt(calcData.start-1)!='*')calcData.start++;
 
@@ -261,6 +275,7 @@ public class CalcController{
         }
     }
 
+    //zapisz rezultat do konkretnego stringbuildera
     public static void saveResult(CalcData calcData, double result, StringBuilder sb){
         if(result >= 0){
             sb.replace(calcData.start, calcData.end, String.valueOf(result));
@@ -273,6 +288,7 @@ public class CalcController{
         }
     }
 
+    //zapisz rezultat do specjalnego stringbuildera
     public static void saveResultSpecial(CalcData calcData, double result, StringBuilder sb){
         if(result >= 0){
             sb.replace(calcData.start+1, calcData.end, String.valueOf(result));
@@ -285,10 +301,12 @@ public class CalcController{
         }
     }
 
+    //wypisz wynik
     public static void printResult(CalcData calcData){
         System.out.println(calcData.toString() + "\n");
     }
 
+    //sprawdź czy jest mnożenie itd w głównym stringbuilderze
     public static void checkAction(CalcData calcData){
         CalcData.howSpecialBracket = 0;
         calcData.setLeftBracket(0);
@@ -338,6 +356,7 @@ public class CalcController{
         if(!calcData.isBracket()&&!calcData.isMultiply()&&!calcData.isSpecialBracket())calcData.setNormal(true);
     }
 
+    //sprawdź czy jest mnożenie itd w konkretnym stringbuilderze
     public static void checkAction(CalcData calcData, StringBuilder sb){
         calcData.setLeftBracket(0);
         calcData.setRightBracket(0);
@@ -362,6 +381,7 @@ public class CalcController{
 
     }
 
+    //oblicz i zwróć wynik
     public static double getResult(CalcData calcData) {
         double result = 0;
         if(calcData.actions.size() != calcData.characters.size()){

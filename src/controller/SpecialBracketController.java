@@ -4,6 +4,7 @@ import data.CalcData;
 
 public class SpecialBracketController implements CalcOperator {
 
+    //operacja nawiasów specjalnych
     @Override
     public void createAction(CalcData calcData) {
         do {

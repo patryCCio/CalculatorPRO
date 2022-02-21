@@ -17,7 +17,7 @@ public class MainApp {
         }
     }
 
-    //Wybór opcji menu
+    //Wybór opcji menu oraz wypisanie opcji
     private static void choiceOption() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int option = -1;

@@ -4,7 +4,7 @@ import data.CalcData;
 
 public class NormalController implements CalcOperator{
 
-
+    //zwykła operacja
     @Override
     public void createAction(CalcData calcData) {
 

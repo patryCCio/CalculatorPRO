@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class CalcData {
 
+    //klasa z danymi
+
     public ArrayList<Double> actions = new ArrayList<>();
     public ArrayList<Character> characters = new ArrayList<>();
 
