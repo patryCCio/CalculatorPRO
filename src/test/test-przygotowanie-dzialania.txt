@@ -24,7 +24,8 @@
 2*(-3+2/2) = -4 -> correct!
 2*(-3+23+2) = 44 -> correct!
 2*(-3+23+2)+(-3+23-5) = 59 correct!
-// Do zrobienia!
-- obsługa specialBracket gdy mamy działanie np: -3*(result<0) lub (...)*(result<0)
+
+// Do zrobienia
+- obsluga działan typu: -3*(result<0) lub (..)*(result<0)
 
 
